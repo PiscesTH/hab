@@ -1,41 +1,52 @@
 .container {
   display: grid;
-  grid-template-columns: 1fr 2fr 2fr 2fr 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: 10px;
-  grid-template-rows: auto 2fr 2fr 2fr 1fr;
+  grid-template-rows: auto 1fr 1fr auto ;
   border: solid 1px #ccc;
+  grid-template-areas: 
+    "header header"
+    "income ratio"
+    "expenditure graph"
+    "footer footer";
+}
+
+.container > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 body {
   box-sizing: border-box;
+  margin: 10px;
+}
+
+body > div {
+  width: 1500px;
+  height: 1500px;
 }
 
 a{
   text-decoration: none;
   color: white;
+  background-color: transparent;
 }
 
-.container > div {
-  background-color: aliceblue;
-}
-
-.header {
-  grid-column: 1 / -1;
+/* header */
+header {
   z-index: 1;
+  position: relative;
+  grid-area: header;
 }
 
-.header-container {
-  background-color: black;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
+.menu {
+  position: relative;
 }
 
 .header-nav {
   display: flex;
   list-style: none;
-
 }
 
 .th {
@@ -59,15 +70,60 @@ button {
   margin-right: 30px;
 }
 
-.left-side {
-  grid-column: 1 / span 1;
-  grid-row: 2 / span 3;
+/* income */
+.income {
+  grid-area: income;
+  background-color: violet;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.main {
-  grid-column: 2 / span 3;
-  grid-row: 2 / span 3;
+.income > div {
+  border: solid 1px black;
+  border-radius: 50%;
+  width: 95%;
+  height: 95%;
 }
+
+.income > div .a {
+  margin: 150px auto;
+  
+}
+
+/* ratio */
+.ratio {
+  grid-area: ratio;
+  background-color: aliceblue;
+}
+
+/* expenditure */
+.expenditure {
+  grid-area: expenditure;
+  background-color: beige;
+}
+
+/* graph */
+.graph {
+  grid-area: graph;
+  background-color: green;
+}
+
+/* footer */
+footer {
+  grid-area: footer;
+  background-color: orange;
+}
+
+.header-container {
+  background-color: black;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+
 
 .main-inner {
   display: flex;
@@ -81,16 +137,6 @@ button {
   margin: 2px;
   border: 1px solid #ccc;
   word-break: break-all;
-}
-
-.right-side {
-  grid-column: -2 / span 1;
-  grid-row: 2 / span 3;
-}
-
-.footer {
-  grid-column: 1 / -1;
-  grid-row: 5 / span 1;
 }
 
 .tmp {

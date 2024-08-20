@@ -13,7 +13,7 @@ function App() {
     <div className="App">
       <body>
         <div className="container">
-          <div className="header">
+          <header>
             <div className="header-container">
               <h1 className="th">
                 <a href="#">TH</a>
@@ -29,23 +29,29 @@ function App() {
                     <li>
                       <button>로그인</button>
                     </li>
-                    <li>
+                    {/* <li>
                       <button>button3</button>
-                    </li>
+                    </li> */}
                   </ul>
                 </nav>
               </div>
             </div>
+          </header>
+          <div className="income">
+            <div>
+              <p className="a">이번달 수입</p>
+              <p className="b">1000000</p>
+            </div>
           </div>
-          <div className="left-side">left-side</div>
-          <div className="main">
+          <div className="ratio">
             <div className="main-inner">
               <div className="main-inner-left">Laaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
               <div className="main-inner-right">R</div>
             </div>
           </div>
-          <div className="footer">footer</div>
-          <div className="right-side">right-side</div>
+          <div className="expenditure">expenditure</div>
+          <div className="graph">graph</div>
+          <footer>footer</footer>
         </div>
         <div className="tmp"></div>
       </body>
