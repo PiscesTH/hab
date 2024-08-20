@@ -84,11 +84,18 @@ button {
   border-radius: 50%;
   width: 95%;
   height: 95%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .income > div .a {
-  margin: 150px auto;
-  
+  margin-bottom: 10px;
+}
+
+.income > div .b {
+  margin-top: 10px;
 }
 
 /* ratio */
