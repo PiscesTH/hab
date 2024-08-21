@@ -88,10 +88,14 @@ button {
   justify-content: center;
 }
 
-.income > div .a,
-.expenditure > div .a {
+p {
   font-size: 50px;
 }
+
+/* .income > div .a,
+.expenditure > div .a {
+  font-size: 50px;
+} */
 
 .income > div .b,
 .expenditure > div .b {
@@ -119,7 +123,8 @@ button {
 /* graph */
 .graph {
   grid-area: graph;
-  background-color: green;
+  background-color: #8ef0d7;
+  flex-direction: column;
 }
 
 /* footer */

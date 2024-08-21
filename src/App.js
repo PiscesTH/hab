@@ -2,8 +2,9 @@ import logo from "./logo.svg";
 import "./App.css";
 import { useState } from "react";
 import React, { PureComponent } from "react";
-import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from "recharts";
+import { PieChart, Pie, Sector, Cell, ResponsiveContainer, Line } from "recharts";
 import Chart from "./Chart.js";
+import LineChart from "./LineChart.js"
 
 <bill>
   <div></div>
@@ -54,7 +55,10 @@ function App() {
               <p className="b">500000</p>
             </div>
           </div>
-          <div className="graph">graph</div>
+          <div className="graph">
+            <p>일별 지출</p>
+            <LineChart></LineChart>
+          </div>
           <footer>footer</footer>
         </div>
         <div className="tmp"></div>
