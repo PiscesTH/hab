@@ -1,8 +1,9 @@
 import logo from "./logo.svg";
 import "./App.css";
 import { useState } from "react";
-import React, { PureComponent } from 'react';
-import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from 'recharts';
+import React, { PureComponent } from "react";
+import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from "recharts";
+import Chart from "./Chart.js";
 
 <bill>
   <div></div>
@@ -44,12 +45,8 @@ function App() {
             </div>
           </div>
           <div className="ratio">
-            <div className="main-inner">
-              <div className="main-inner-left">
-                Laaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-              </div>
-              <div className="main-inner-right">R</div>
-            </div>
+            <p>지출 비율</p>
+              <Chart></Chart>
           </div>
           <div className="expenditure">
             <div>
@@ -57,9 +54,7 @@ function App() {
               <p className="b">500000</p>
             </div>
           </div>
-          <div className="graph">
-            <RadialChart data={myData} width={300} height={300} />
-          </div>
+          <div className="graph">graph</div>
           <footer>footer</footer>
         </div>
         <div className="tmp"></div>

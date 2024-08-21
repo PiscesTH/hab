@@ -74,9 +74,6 @@ button {
 .income {
   grid-area: income;
   background-color: violet;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .income > div,
@@ -93,13 +90,11 @@ button {
 
 .income > div .a,
 .expenditure > div .a {
-  /* margin-bottom: 10px; */
   font-size: 50px;
 }
 
 .income > div .b,
 .expenditure > div .b {
-  /* margin-top: 10px; */
   font-size: 40px;
 }
 
@@ -107,6 +102,12 @@ button {
 .ratio {
   grid-area: ratio;
   background-color: aliceblue;
+  flex-direction: column;
+}
+
+.ratio > p {
+  font-size: 50px;
+  float: inline-start;
 }
 
 /* expenditure */
