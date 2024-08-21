@@ -79,7 +79,8 @@ button {
   justify-content: center;
 }
 
-.income > div {
+.income > div,
+.expenditure > div {
   border: solid 1px black;
   border-radius: 50%;
   width: 95%;
@@ -90,12 +91,16 @@ button {
   justify-content: center;
 }
 
-.income > div .a {
-  margin-bottom: 10px;
+.income > div .a,
+.expenditure > div .a {
+  /* margin-bottom: 10px; */
+  font-size: 50px;
 }
 
-.income > div .b {
-  margin-top: 10px;
+.income > div .b,
+.expenditure > div .b {
+  /* margin-top: 10px; */
+  font-size: 40px;
 }
 
 /* ratio */

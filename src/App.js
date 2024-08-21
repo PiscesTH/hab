@@ -1,12 +1,12 @@
 import logo from "./logo.svg";
 import "./App.css";
 import { useState } from "react";
+import React, { PureComponent } from 'react';
+import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from 'recharts';
 
 <bill>
-  <div>
-
-  </div>
-</bill>
+  <div></div>
+</bill>;
 
 function App() {
   return (
@@ -45,12 +45,21 @@ function App() {
           </div>
           <div className="ratio">
             <div className="main-inner">
-              <div className="main-inner-left">Laaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+              <div className="main-inner-left">
+                Laaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+              </div>
               <div className="main-inner-right">R</div>
             </div>
           </div>
-          <div className="expenditure">expenditure</div>
-          <div className="graph">graph</div>
+          <div className="expenditure">
+            <div>
+              <p className="a">이번달 지출</p>
+              <p className="b">500000</p>
+            </div>
+          </div>
+          <div className="graph">
+            <RadialChart data={myData} width={300} height={300} />
+          </div>
           <footer>footer</footer>
         </div>
         <div className="tmp"></div>
