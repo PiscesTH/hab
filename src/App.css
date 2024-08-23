@@ -1,30 +1,46 @@
 .container {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto 1500px 150px;
   gap: 10px;
-  grid-template-rows: auto 1fr 1fr auto ;
-  border: solid 1px #ccc;
+  border: solid 1px red;
+  padding: 10px;
   grid-template-areas: 
-    "header header"
-    "income ratio"
-    "expenditure graph"
-    "footer footer";
+  "header"
+  "main"
+  "footer"
+  ;
 }
 
-.container > div {
+main {
+  grid-area: main;
+
+}
+
+.main-container {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  grid-template-rows:  1fr 1fr  ;
+  border: solid 1px #ccc;
+  grid-template-areas: 
+    "income ratio"
+    "expenditure graph"
+    ;
+}
+
+.income, .ratio, .expenditure, .graph {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-body {
+.body {
   box-sizing: border-box;
   margin: 10px;
-}
-
-body > div {
-  width: 1500px;
-  height: 1500px;
+  max-width: 1500px;
+  min-width: 1000px;
 }
 
 a{
@@ -68,6 +84,11 @@ button {
 
 .header-nav >li:last-child {
   margin-right: 30px;
+}
+
+.active {
+  background: white;
+  color: #000;
 }
 
 /* income */
