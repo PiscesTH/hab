@@ -7,6 +7,7 @@ import LineChart from "./LineChart.js";
 import { NavLink, Route, Routes, Link } from "react-router-dom";
 import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
+import moment from "moment";
 
 function MainPage() {
   return <div className="main-container">
@@ -35,7 +36,16 @@ function MainPage() {
 
 function List() {
   return <div className="list-container">
-      <Calendar></Calendar>
+      <Calendar 
+                formatDay={(locale, date) => moment(date).format("D")}
+                formatYear={(locale, date) => moment(date).format("YYYY")}
+                formatMonthYear={(locale, date) => moment(date).format("YYYY. MM")}
+                calendarType="gregory"
+                showNeighboringMonth={false}
+                next2Label={null}
+                prev2Label={null} 
+                minDetail="year">
+                </Calendar>
     </div>;
 }
 
