@@ -6,6 +6,7 @@ import Chart from "./Chart.js";
 import LineChart from "./LineChart.js";
 import { NavLink, Route, Routes, Link } from "react-router-dom";
 import Calendar from "react-calendar";
+import 'react-calendar/dist/Calendar.css';
 
 function MainPage() {
   return <div className="main-container">
@@ -73,11 +74,11 @@ function App() {
           </header>
           <main>
             <Routes>
-              <Route exact path="/" element={<MainPage />}></Route>
-              <Route path="/list" element={<List></List>}></Route>
+              <Route exact path="/" element={<MainPage/>}></Route>
+              <Route path="/list" element={<List/>}></Route>
             </Routes>
           </main>
-          <footer>footer</footer>
+          <footer></footer>
         </div>
       </div>
     </div>
