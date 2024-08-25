@@ -176,14 +176,30 @@ footer {
   word-break: break-all;
 }
 
-/* calendar */
+/* tmp list */
 .list-container {
   width: 100%;
   height: 100%;
+  display: grid;
+  gap: 10px;
+  grid-template-rows: auto 1fr;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: 
+  "calendar form"
+  "read read"
+  ;
 }
 
+.read {
+  grid-area: read;
+  background-color: bisque;
+}
+
+/* calendar */
 .react-calendar {
-  width: 500px !important;
+  width: 98% !important;
+  grid-area: calendar;
+  margin: 0 auto;
 }
 
 .react-calendar__navigation {
@@ -236,7 +252,66 @@ span {
   border-radius: 14px;
 }
 
-.abbr {
+/* abbr {
   font-size: 18px;
   font-weight: 900;
+} */
+
+/* form */
+.form-container {
+  grid-area: form;
+  width: 300px; /* Adjust the width as needed */
+  padding: 20px;
+  background-color: #FAF8F3; /* Light cream color */
+  border-radius: 15px; /* Rounded corners */
+  border: 2px solid #a3998d; /* Border color similar to the image */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow */
+}
+
+.form-date,
+.form-title {
+  width: 100%;
+  height: 40px;
+  margin-bottom: 15px;
+  padding: 5px 10px;
+  background-color: #D9EBA0; /* Light green color */
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  font-family: 'Courier New', Courier, monospace; /* Monospace font */
+}
+
+.form-date {
+  background-color: bisque;
+}
+
+.form-textarea {
+  width: 100%;
+  height: 100px;
+  margin-bottom: 15px;
+  padding: 10px;
+  background-color: #FFF;
+  border: 2px solid #a3998d;
+  border-radius: 5px;
+  font-size: 14px;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.form-submit {
+  width: 100%;
+  padding: 10px 0;
+  background-color: #FADADD; /* Light pink color */
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  color: #6A6A6A; /* Grey color */
+  cursor: pointer;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.form-submit:hover {
+  background-color: #f5c4c7; /* Slightly darker pink on hover */
 }
