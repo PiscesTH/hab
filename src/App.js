@@ -37,12 +37,12 @@ function MainPage() {
 }
 
 function List() {
-  const [date, selectDate] = useState(new Date());
+  const [date, setDate] = useState(new Date());
 
   return (
     <div className="list-container">
       <Calendar
-        onChange={selectDate}
+        onChange={setDate}
         value={date}
         formatDay={(locale, date) => moment(date).format("D")}
         formatYear={(locale, date) => moment(date).format("YYYY")}
@@ -56,25 +56,25 @@ function List() {
       {/* useEffect(() => {
         console.log(date)
       }, [date]); */}
-      <MyForm date={date} />
+      <MyForm date={date} setDate = {setDate} />
       <div className="read">read</div>
     </div>
   );
 }
 
 function MyForm(props) {
-  const [date, setDate] = useState(moment(props.date).format("YYYY-MM-DD"));
+  const formattedDate = moment(props.date).format("YYYY-MM-DD");
 
   const handleDateChange = (event) => {
-    setDate(event.target.value);
+    props.setDate(event.target.value);
   };
 
   return (
     <div className="form-container">
       <input
-        type="text"
+        type="date"
         className="form-date"
-        value={date}
+        value={formattedDate}
         onChange={handleDateChange}
       ></input>
       <input type="text" className="form-title" placeholder="Title" />

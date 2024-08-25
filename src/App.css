@@ -315,3 +315,25 @@ span {
 .form-submit:hover {
   background-color: #f5c4c7; /* Slightly darker pink on hover */
 }
+
+/* 크롬, 사파리, 엣지 등 웹킷 기반 브라우저 */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  display: none;
+}
+
+/* 파이어폭스 */
+input[type="date"]::-moz-calendar-picker-indicator {
+  display: none;
+}
+
+/* 인터넷 익스플로러 */
+input[type="date"]::-ms-clear {
+  display: none;
+}
+
+/* 전체적으로 패딩 조절 필요 없을거같기도 하고? */
+/* input[type="date"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+} */
