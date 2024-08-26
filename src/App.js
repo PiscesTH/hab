@@ -56,7 +56,7 @@ function List() {
       {/* useEffect(() => {
         console.log(date)
       }, [date]); */}
-      <MyForm date={date} setDate = {setDate} />
+      <MyForm date={date} setDate={setDate} />
       <div className="read">read</div>
     </div>
   );
@@ -69,6 +69,15 @@ function MyForm(props) {
     props.setDate(event.target.value);
   };
 
+  const changeTitle = (event)=> {
+    // const targetValue = event.target.value;
+    const targetValue = event.target.options[event.target.selectedIndex].text;
+    // document.querySelector('form-title').setAttribute('value', {targetValue});
+    setSelectedValue(targetValue);
+  }
+
+  const [selectedValue, setSelectedValue] = useState();
+
   return (
     <div className="form-container">
       <input
@@ -77,7 +86,13 @@ function MyForm(props) {
         value={formattedDate}
         onChange={handleDateChange}
       ></input>
-      <input type="text" className="form-title" placeholder="Title" />
+      <select onChange={changeTitle}>
+        <option value="food">식비</option>
+        <option value="banana">교통비</option>
+        <option value="orange">공과금</option>
+        <option value="melon">기타</option>
+      </select>
+      <input type="text" className="form-title" placeholder="Title" value={selectedValue}/>
       <textarea
         className="form-textarea"
         placeholder="Write something..."

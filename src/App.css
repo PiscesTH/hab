@@ -315,7 +315,7 @@ span {
 .form-submit:hover {
   background-color: #f5c4c7; /* Slightly darker pink on hover */
 }
-
+/* input type = date 의 기본 달력 ui 삭제하기 */
 /* 크롬, 사파리, 엣지 등 웹킷 기반 브라우저 */
 input[type="date"]::-webkit-calendar-picker-indicator {
   display: none;
@@ -337,3 +337,22 @@ input[type="date"]::-ms-clear {
   -moz-appearance: none;
   appearance: none;
 } */
+
+/* select */
+select {
+  min-width: 320px;
+  width: 100%;
+  height: 50px;
+  padding: 0 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-bottom: 16px;
+  background-color: #ccc;
+  font-size: 16px;
+}
+
+input[type="text"]:focus, select:focus, textarea:focus {
+  outline: none;
+  border: 2px solid #555;
+}
