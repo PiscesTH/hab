@@ -36,18 +36,19 @@ const renderCustomizedLabel = ({
     </text>
   );
 };
+
 export default class Chart extends PureComponent {
   render() {
     return (
-      <ResponsiveContainer  width={'70%'} height={'70%'}>
+      <ResponsiveContainer  width={'100%' } height={'100%'}>
         <PieChart>
           <Pie
             data={data}
             cx={'50%'}
-            cy={'50%'}
+            cy={'37%'}
             labelLine={false}
             label={renderCustomizedLabel}
-            outerRadius={200}
+            outerRadius={120} /* 차트 자체의 크기 */
             fill="#8884d8"
             dataKey="value"
           >

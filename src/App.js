@@ -36,11 +36,43 @@ function MainPage() {
   );
 }
 
-function List() {
+function SecondPage() {
   const [date, setDate] = useState(new Date());
+  const tmpData = [
+    {
+      expense: "5000",
+      title: "택시비",
+      date: "2024-08-25",
+      category: "교통비",
+    },
+    {
+      expense: "10000",
+      title: "점심",
+      date: "2024-08-26",
+      category: "식비",
+    },
+    {
+      date: "2024-08-26",
+      expense: "15000",
+      title: "Groceries",
+      category: "Food",
+    },
+    {
+      date: "2024-08-27",
+      expense: "7500",
+      title: "Transport",
+      category: "Travel",
+    },
+    {
+      date: "2024-08-28",
+      expense: "120000",
+      title: "Electricity Bill",
+      category: "Utilities",
+    },
+  ];
 
   return (
-    <div className="list-container">
+    <div className="second-page-container">
       <Calendar
         onChange={setDate}
         value={date}
@@ -53,11 +85,10 @@ function List() {
         prev2Label={null}
         minDetail="year"
       ></Calendar>
-      {/* useEffect(() => {
-        console.log(date)
-      }, [date]); */}
       <MyForm date={date} setDate={setDate} />
-      <div className="read">read</div>
+      <div className="read">
+        <List data={tmpData}></List>
+      </div>
     </div>
   );
 }
@@ -69,16 +100,17 @@ function MyForm(props) {
     props.setDate(event.target.value);
   };
 
-  const changeTitle = (event)=> {
+  const changeTitle = (event) => {
     // const targetValue = event.target.value;
     const targetValue = event.target.options[event.target.selectedIndex].text;
     // document.querySelector('form-title').setAttribute('value', {targetValue});
     setSelectedValue(targetValue);
-  }
+  };
 
   const [selectedValue, setSelectedValue] = useState();
 
   return (
+    // <form>
     <div className="form-container">
       <input
         type="date"
@@ -92,12 +124,36 @@ function MyForm(props) {
         <option value="orange">공과금</option>
         <option value="melon">기타</option>
       </select>
-      <input type="text" className="form-title" placeholder="Title" value={selectedValue}/>
-      <textarea
-        className="form-textarea"
-        placeholder="Write something..."
-      ></textarea>
+      <input
+        type="text"
+        className="form-title"
+        placeholder="사용처"
+        value={selectedValue}
+      />
+      <input className="form-expense" placeholder="금액"></input>
       <button className="form-submit">SUBMIT</button>
+    </div>
+    // </form>
+  );
+}
+
+function List({ data }) {
+  return (
+    <div className="list-container">
+      {data.map((item, index) => (
+        <div className="list-item" key={index}>
+          <div className="list-item-buttons">
+            <button className="edit-button">수정</button>
+            <button className="delete-button">삭제</button>
+          </div>
+          <div className="list-item-content">
+            <div className="list-item-date">{item.date}</div>
+            <div className="list-item-expense">{item.expense} 원</div>
+            <div className="list-item-title">{item.title}</div>
+            <div className="list-item-category">{item.category}</div>
+          </div>
+        </div>
+      ))}
     </div>
   );
 }
@@ -117,7 +173,7 @@ function App() {
                   <ul className="header-nav">
                     <li>
                       <button>
-                        <NavLink exact to="/">
+                        <NavLink exact="true" to="/">
                           홈
                         </NavLink>
                       </button>
@@ -137,11 +193,11 @@ function App() {
           </header>
           <main>
             <Routes>
-              <Route exact path="/" element={<MainPage />}></Route>
-              <Route path="/list" element={<List />}></Route>
+              <Route exact="true" path="/" element={<MainPage />}></Route>
+              <Route path="/list" element={<SecondPage />}></Route>
             </Routes>
           </main>
-          <footer></footer>
+          <footer>footer</footer>
         </div>
       </div>
     </div>
