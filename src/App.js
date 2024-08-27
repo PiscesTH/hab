@@ -8,6 +8,8 @@ import { NavLink, Route, Routes, Link } from "react-router-dom";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import moment from "moment";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 function MainPage() {
   return (
@@ -143,8 +145,12 @@ function List({ data }) {
       {data.map((item, index) => (
         <div className="list-item" key={index}>
           <div className="list-item-buttons">
-            <button className="edit-button">수정</button>
-            <button className="delete-button">삭제</button>
+            <button className="edit-button">
+              <FontAwesomeIcon icon={faPen} />
+            </button>
+            <button className="delete-button">
+              <FontAwesomeIcon icon={faTrash} />
+            </button>
           </div>
           <div className="list-item-content">
             <div className="list-item-date">{item.date}</div>
@@ -197,7 +203,7 @@ function App() {
               <Route path="/list" element={<SecondPage />}></Route>
             </Routes>
           </main>
-          <footer>footer</footer>
+          <footer>Copyright 2024. TH All rights reserved.</footer>
         </div>
       </div>
     </div>
