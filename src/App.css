@@ -16,7 +16,7 @@ html {
 
 .container {
   display: grid;
-  grid-template-rows: auto auto 150px;
+  grid-template-rows: auto auto 100px;
   gap: 10px;
   border: solid 1px red;
   width: 1014px;
@@ -37,9 +37,8 @@ main {
   height: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 5px;
   grid-template-rows: 1fr 1fr;
-  border: solid 1px #ccc;
   grid-template-areas:
     "income ratio"
     "expenditure graph";
@@ -51,10 +50,6 @@ main {
   justify-content: center;
   width: 500px;
   height: 500px;
-}
-
-.body {
-  margin: 10px;
 }
 
 a {
@@ -113,7 +108,7 @@ li > button {
 
 .main-container > div > div {
   border-radius: 8px;
-  background-color: #E0E5B6;
+  background-color: #FAF8F3;
   width: 95%;
   height: 95%;
   display: flex;
@@ -122,6 +117,7 @@ li > button {
   justify-content: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border: 1px solid #ccc;
+  color: #674636;
 }
 
 p {
@@ -172,7 +168,7 @@ p {
 /* footer */
 footer {
   grid-area: footer;
-  background-color: orange;
+  background-color: #CCD5AE;
   margin-top: 10px;
   display: flex;
   align-items: center;
@@ -198,8 +194,6 @@ footer {
   width: 48%;
   height: 96%;
   margin: 2px;
-  border: 1px solid #ccc;
-  word-break: break-all;
 }
 
 /* tmp list */
@@ -221,7 +215,6 @@ footer {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: bisque;
 }
 
 /* calendar */

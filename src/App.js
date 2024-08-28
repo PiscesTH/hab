@@ -17,7 +17,7 @@ function MainPage() {
       <div className="income">
         <div>
           <p className="a">이번달 수입</p>
-          <p className="b">1000000</p>
+          <p className="b">1000000 원</p>
         </div>
       </div>
       <div className="ratio">
@@ -29,7 +29,7 @@ function MainPage() {
       <div className="expenditure">
         <div>
           <p className="a">이번달 지출</p>
-          <p className="b">500000</p>
+          <p className="b">500000 원</p>
         </div>
       </div>
       <div className="graph">
