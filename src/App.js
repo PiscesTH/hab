@@ -21,8 +21,10 @@ function MainPage() {
         </div>
       </div>
       <div className="ratio">
-        <p>지출 비율</p>
-        <Chart></Chart>
+        <div>
+          <p>지출 비율</p>
+          <Chart></Chart>
+        </div>
       </div>
       <div className="expenditure">
         <div>
@@ -31,8 +33,10 @@ function MainPage() {
         </div>
       </div>
       <div className="graph">
-        <p>일별 지출</p>
-        <LineChart></LineChart>
+        <div>
+          <p>일별 지출</p>
+          <LineChart></LineChart>
+        </div>
       </div>
     </div>
   );

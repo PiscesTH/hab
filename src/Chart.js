@@ -40,12 +40,12 @@ const renderCustomizedLabel = ({
 export default class Chart extends PureComponent {
   render() {
     return (
-      <ResponsiveContainer  width={'100%' } height={'100%'}>
+      <ResponsiveContainer  width={'80%' } height={'80%'}>
         <PieChart>
           <Pie
             data={data}
             cx={'50%'}
-            cy={'37%'}
+            cy={'42%'}
             labelLine={false}
             label={renderCustomizedLabel}
             outerRadius={120} /* 차트 자체의 크기 */

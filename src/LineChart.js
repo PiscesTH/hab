@@ -43,11 +43,13 @@ export default class Example extends PureComponent {
 
   render() {
     return (
-      <ResponsiveContainer width="90%" height="70%">
+      <ResponsiveContainer width="95%" height="65%">
         <LineChart
-          width={500}
-          height={300}
+          width={400}
+          height={400}
           data={data}
+          cx={'50%'}
+          cy={'42%'}
           margin={{
             top: 5,
             right: 30,

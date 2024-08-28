@@ -45,10 +45,7 @@ main {
     "expenditure graph";
 }
 
-.income,
-.ratio,
-.expenditure,
-.graph {
+.main-container > div {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -62,8 +59,9 @@ main {
 
 a {
   text-decoration: none;
-  color: white;
   background-color: transparent;
+  display: inline-block;
+  color: black;
 }
 
 /* header */
@@ -91,7 +89,7 @@ li > button {
   background-color: transparent;
   border: 0;
   cursor: pointer;
-  color: white;
+  color: black;
 }
 
 .header-nav > li {
@@ -104,26 +102,26 @@ li > button {
 }
 
 .active {
-  background: white;
-  color: #000;
+  background: #FEFAE0;
+  /* color: #000; */
 }
 
 /* income */
 .income {
   grid-area: income;
-  background-color: violet;
 }
 
-.income > div,
-.expenditure > div {
-  border: solid 1px black;
-  border-radius: 50%;
+.main-container > div > div {
+  border-radius: 8px;
+  background-color: #E0E5B6;
   width: 95%;
   height: 95%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ccc;
 }
 
 p {
@@ -143,9 +141,17 @@ p {
 /* ratio */
 .ratio {
   grid-area: ratio;
-  background-color: aliceblue;
-  flex-direction: column;
 }
+
+/* .ratio > div {
+  width: 95%;
+  height: 95%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #E0E5B6;
+  flex-direction: column;
+} */
 
 .ratio > p {
   font-size: 50px;
@@ -155,13 +161,11 @@ p {
 /* expenditure */
 .expenditure {
   grid-area: expenditure;
-  background-color: beige;
 }
 
 /* graph */
 .graph {
   grid-area: graph;
-  background-color: #8ef0d7;
   flex-direction: column;
 }
 
@@ -177,7 +181,7 @@ footer {
 }
 
 .header-container {
-  background-color: black;
+  background-color: #CCD5AE;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -394,7 +398,6 @@ input[type="text"]:focus, select:focus, textarea:focus {
   margin: 20px;
   border-radius: 8px;
   background-color: #ccc;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .list-item {
