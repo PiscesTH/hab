@@ -48,8 +48,6 @@ export default class Example extends PureComponent {
           width={400}
           height={400}
           data={data}
-          cx={'50%'}
-          cy={'42%'}
           margin={{
             top: 5,
             right: 30,
