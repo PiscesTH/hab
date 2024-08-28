@@ -2,7 +2,7 @@ import logo from "./logo.svg";
 import "./App.css";
 import { useState, useEffect } from "react";
 import React, { PureComponent } from "react";
-import Chart from "./Chart.js";
+import PieChart from "./PieChart.js";
 import LineChart from "./LineChart.js";
 import { NavLink, Route, Routes, Link } from "react-router-dom";
 import Calendar from "react-calendar";
@@ -23,7 +23,7 @@ function MainPage() {
       <div className="ratio">
         <div>
           <p>지출 비율</p>
-          <Chart></Chart>
+          <PieChart></PieChart>
         </div>
       </div>
       <div className="expenditure">
