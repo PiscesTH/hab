@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import "./App.css";
 import { useState, useEffect } from "react";
 import React, { PureComponent } from "react";
@@ -180,10 +179,7 @@ function List({ data }) {
       ))}
       {/* 더보기 버튼 */}
       {visibleItems < data.length && (
-        <div
-          className="load-more-container"
-          // style={{ textAlign: "center", marginTop: "10px" }}
-        >
+        <div className="load-more-container">
           <button onClick={handleLoadMore} className="load-more-button">
             <FontAwesomeIcon icon={faEllipsis} />
           </button>
