@@ -20,7 +20,7 @@ html {
   gap: 10px;
   border: solid 1px red;
   width: 1014px;
-  
+
   grid-template-areas:
     "header"
     "main"
@@ -97,7 +97,7 @@ li > button {
 }
 
 .active {
-  background: #FEFAE0;
+  background: #fefae0;
   /* color: #000; */
 }
 
@@ -108,7 +108,7 @@ li > button {
 
 .main-container > div > div {
   border-radius: 8px;
-  background-color: #FAF8F3;
+  background-color: #faf8f3;
   width: 95%;
   height: 95%;
   display: flex;
@@ -168,7 +168,7 @@ p {
 /* footer */
 footer {
   grid-area: footer;
-  background-color: #CCD5AE;
+  background-color: #ccd5ae;
   margin-top: 10px;
   display: flex;
   align-items: center;
@@ -177,7 +177,7 @@ footer {
 }
 
 .header-container {
-  background-color: #CCD5AE;
+  background-color: #ccd5ae;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -204,10 +204,9 @@ footer {
   gap: 10px;
   grid-template-rows: auto 1fr;
   grid-template-columns: 1.2fr 1fr;
-  grid-template-areas: 
-  "calendar form"
-  "read read"
-  ;
+  grid-template-areas:
+    "calendar form"
+    "read read";
 }
 
 .read {
@@ -228,7 +227,7 @@ footer {
 }
 
 .react-calendar__navigation {
-  background: #FAF8F3;
+  background: #faf8f3;
   border-bottom: 4px solid #d392f1dc;
   height: 90px;
   border-radius: 20px 20px 0 0;
@@ -287,7 +286,7 @@ span {
   grid-area: form;
   width: 98%; /* Adjust the width as needed */
   padding: 20px;
-  background-color: #FAF8F3; /* Light cream color */
+  background-color: #faf8f3; /* Light cream color */
   border-radius: 15px; /* Rounded corners */
   border: 2px solid #a3998d; /* Border color similar to the image */
   display: flex;
@@ -304,12 +303,12 @@ span {
   height: 40px;
   margin-bottom: 15px;
   padding: 5px 10px;
-  background-color: #D9EBA0; /* Light green color */
+  background-color: #d9eba0; /* Light green color */
   /* border: 2px solid #a3998d; */
   border: none;
   border-radius: 5px;
   font-size: 16px;
-  font-family: 'Courier New', Courier, monospace; /* Monospace font */
+  font-family: "Courier New", Courier, monospace; /* Monospace font */
 }
 
 .form-date {
@@ -317,19 +316,19 @@ span {
 }
 
 .form-expense {
-  background-color: #FFF;
+  background-color: #fff;
 }
 
 .form-submit {
   width: 100%;
   padding: 10px 0;
-  background-color: #FADADD; /* Light pink color */
+  background-color: #fadadd; /* Light pink color */
   border: none;
   border-radius: 5px;
   font-size: 14px;
-  color: #6A6A6A; /* Grey color */
+  color: #6a6a6a; /* Grey color */
   cursor: pointer;
-  font-family: 'Courier New', Courier, monospace;
+  font-family: "Courier New", Courier, monospace;
 }
 
 .form-submit:hover {
@@ -370,7 +369,9 @@ select {
   font-size: 16px;
 }
 
-input[type="text"]:focus, select:focus, textarea:focus {
+input[type="text"]:focus,
+select:focus,
+textarea:focus {
   outline: none;
   border: 2px solid #555;
 }
@@ -378,9 +379,10 @@ input[type="text"]:focus, select:focus, textarea:focus {
 .list-item {
   width: 100%;
   height: 100px;
-  background-color: #FAF8F3;
+  background-color: #faf8f3;
   margin-bottom: 5px;
   box-sizing: content-box;
+  border-radius: 15px;
 }
 
 .list-container {
@@ -431,7 +433,7 @@ input[type="text"]:focus, select:focus, textarea:focus {
 }
 
 .list-item-content {
-padding-right: 100px;
+  padding-right: 100px;
 }
 
 .list-item-buttons {
@@ -456,4 +458,24 @@ padding-right: 100px;
 .edit-button:hover,
 .delete-button:hover {
   background-color: #e0e0e0;
+}
+
+.load-more-container {
+  display: flex;            /* 중앙 정렬을 위해 플렉스 박스 사용 */
+  justify-content: center;  /* 수평 중앙 정렬 */
+  margin-top: 10px;         /* 위쪽에 간격 추가 */
+}
+
+.load-more-button {
+  padding: 10px 20px;       /* 버튼 내부 여백 */
+  font-size: 15px;          /* 글자 크기 */
+  background-color: #faf8f3; /* 버튼 배경색 */
+  border: none;             /* 테두리 제거 */
+  border-radius: 5px;       /* 모서리를 둥글게 */
+  cursor: pointer;          /* 커서가 포인터로 변경 */
+  transition: background-color 0.3s; /* 배경색 변경 시 부드러운 전환 */
+}
+
+.load-more-button:hover {
+  background-color: #d392f1dc; /* 버튼 호버 시 배경색 변경 */
 }

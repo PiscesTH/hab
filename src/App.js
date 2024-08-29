@@ -9,7 +9,7 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import moment from "moment";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faPen, faTrash, faEllipsis } from "@fortawesome/free-solid-svg-icons";
 
 function MainPage() {
   return (
@@ -74,6 +74,12 @@ function SecondPage() {
       expense: "120000",
       title: "Electricity Bill",
       category: "Utilities",
+    },
+    {
+      expense: "35000",
+      title: "저녁",
+      date: "2024-08-29",
+      category: "식비",
     },
   ];
 
@@ -144,9 +150,17 @@ function MyForm(props) {
 }
 
 function List({ data }) {
+  // 처음에 보여줄 아이템 수 설정
+  const [visibleItems, setVisibleItems] = useState(5);
+
+  // 더보기 버튼 클릭 시 5개씩 더 보여주기
+  const handleLoadMore = () => {
+    setVisibleItems((prevVisibleItems) => prevVisibleItems + 5);
+  };
+
   return (
     <div className="list-container">
-      {data.map((item, index) => (
+      {data.slice(0, visibleItems).map((item, index) => (
         <div className="list-item" key={index}>
           <div className="list-item-buttons">
             <button className="edit-button">
@@ -164,6 +178,17 @@ function List({ data }) {
           </div>
         </div>
       ))}
+      {/* 더보기 버튼 */}
+      {visibleItems < data.length && (
+        <div
+          className="load-more-container"
+          // style={{ textAlign: "center", marginTop: "10px" }}
+        >
+          <button onClick={handleLoadMore} className="load-more-button">
+            <FontAwesomeIcon icon={faEllipsis} />
+          </button>
+        </div>
+      )}
     </div>
   );
 }
