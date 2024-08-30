@@ -9,6 +9,7 @@ import "react-calendar/dist/Calendar.css";
 import moment from "moment";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faTrash, faEllipsis } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
 
 function MainPage() {
   return (
@@ -45,42 +46,66 @@ function SecondPage() {
   const [date, setDate] = useState(new Date());
   const tmpData = [
     {
-      expense: "5000",
-      title: "택시비",
+      amount: "5000",
+      purpose: "택시비",
       date: "2024-08-25",
       category: "교통비",
     },
     {
-      expense: "10000",
-      title: "점심",
+      amount: "10000",
+      purpose: "점심",
       date: "2024-08-26",
       category: "식비",
     },
     {
       date: "2024-08-26",
-      expense: "15000",
-      title: "Groceries",
+      amount: "15000",
+      purpose: "Groceries",
       category: "Food",
     },
     {
       date: "2024-08-27",
-      expense: "7500",
-      title: "Transport",
+      amount: "7500",
+      purpose: "Transport",
       category: "Travel",
     },
     {
       date: "2024-08-28",
-      expense: "120000",
-      title: "Electricity Bill",
+      amount: "120000",
+      purpose: "Electricity Bill",
       category: "Utilities",
     },
     {
-      expense: "35000",
-      title: "저녁",
+      amount: "35000",
+      purpose: "저녁",
       date: "2024-08-29",
       category: "식비",
     },
   ];
+
+  const [testData, setTestData] = useState([]);
+
+  useEffect(() => {
+    // 컴포넌트가 처음 렌더링될 때 한 번만 실행됨
+    axios({
+      method: "get",
+      url: "http://localhost:8080/api/history",
+    })
+      .then((res) => {
+        setTestData(res.data.data); 
+      })
+      .catch((err) => {
+        console.log(err); 
+      });
+  }, []);
+
+  
+
+  useEffect(() => {
+    if (testData) {
+      console.log(testData); // testData가 변경될 때마다 실행
+    }
+  }, [testData]); // testData가 변경될 때마다 실행
 
   return (
     <div className="second-page-container">
@@ -98,7 +123,7 @@ function SecondPage() {
       ></Calendar>
       <MyForm date={date} setDate={setDate} />
       <div className="read">
-        <List data={tmpData}></List>
+        <List data={testData}></List>
       </div>
     </div>
   );
@@ -171,9 +196,9 @@ function List({ data }) {
           </div>
           <div className="list-item-content">
             <div className="list-item-date">{item.date}</div>
-            <div className="list-item-expense">{item.expense} 원</div>
-            <div className="list-item-title">{item.title}</div>
-            <div className="list-item-category">{item.category}</div>
+            <div className="list-item-expense">{item.amount} 원</div>
+            <div className="list-item-title">{item.purpose}</div>
+            <div className="list-item-category">{item.category.category}</div>
           </div>
         </div>
       ))}
