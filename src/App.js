@@ -43,75 +43,57 @@ function MainPage() {
 }
 
 function SecondPage() {
-  const [date, setDate] = useState(new Date());
-  const tmpData = [
-    {
-      amount: "5000",
-      purpose: "택시비",
-      date: "2024-08-25",
-      category: "교통비",
-    },
-    {
-      amount: "10000",
-      purpose: "점심",
-      date: "2024-08-26",
-      category: "식비",
-    },
-    {
-      date: "2024-08-26",
-      amount: "15000",
-      purpose: "Groceries",
-      category: "Food",
-    },
-    {
-      date: "2024-08-27",
-      amount: "7500",
-      purpose: "Transport",
-      category: "Travel",
-    },
-    {
-      date: "2024-08-28",
-      amount: "120000",
-      purpose: "Electricity Bill",
-      category: "Utilities",
-    },
-    {
-      amount: "35000",
-      purpose: "저녁",
-      date: "2024-08-29",
-      category: "식비",
-    },
-  ];
+  const [formData, setFormData] = useState({
+    icategory: "",
+    amount: "",
+    purpose: "",
+    date: moment(new Date()).format("YYYY-MM-DD"),
+  });
 
-  const [testData, setTestData] = useState([]);
+  const handleDateChange = (date) => {
+    // Calendar에서 날짜 선택 시 호출되는 함수
+    const formattedDate = moment(date).format("YYYY-MM-DD"); // 날짜 포맷팅
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      date: formattedDate, // date 필드만 업데이트
+    }));
+    console.log(formattedDate);
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target; // name과 value를 e.target에서 추출
+
+    // 기존 formData를 복사하고, 변경된 name 필드의 값을 업데이트
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  };
+  const [historyList, setHistoryList] = useState([]);
 
   useEffect(() => {
-    // 컴포넌트가 처음 렌더링될 때 한 번만 실행됨
-    axios({
-      method: "get",
-      url: "http://localhost:8080/api/history",
-    })
-      .then((res) => {
-        setTestData(res.data.data); 
-      })
-      .catch((err) => {
-        console.log(err); 
-      });
+    const fetchData = async () => {
+      try {
+        const res = await axios.get("http://localhost:8080/api/history");
+        setHistoryList(res.data.data); // 데이터를 상태에 설정
+      } catch (err) {
+        console.log(err); // 에러 처리
+      }
+    };
+    fetchData(); // 함수 호출
   }, []);
 
-  
-
-  useEffect(() => {
-    if (testData) {
-      console.log(testData); // testData가 변경될 때마다 실행
+/*   useEffect(() => {
+    if (historyList) {
+      console.log(historyList); // historyList가 변경될 때마다 실행
     }
-  }, [testData]); // testData가 변경될 때마다 실행
+  }, [historyList]); // historyList가 변경될 때마다 실행 */
 
   return (
     <div className="second-page-container">
       <Calendar
-        onChange={setDate}
-        value={date}
+        onChange={handleDateChange}
+        value={new Date(formData.date)}
         formatDay={(locale, date) => moment(date).format("D")}
         formatYear={(locale, date) => moment(date).format("YYYY")}
         formatMonthYear={(locale, date) => moment(date).format("YYYY. MM")}
@@ -121,20 +103,20 @@ function SecondPage() {
         prev2Label={null}
         minDetail="year"
       ></Calendar>
-      <MyForm date={date} setDate={setDate} />
+      <MyForm formData={formData} setFormData={handleInputChange} />
       <div className="read">
-        <List data={testData}></List>
+        <List data={historyList}></List>
       </div>
     </div>
   );
 }
 
 function MyForm(props) {
-  const formattedDate = moment(props.date).format("YYYY-MM-DD");
+  // const formattedDate = moment(props.formData.date).format("YYYY-MM-DD");
 
-  const handleDateChange = (event) => {
-    props.setDate(event.target.value);
-  };
+  // const handleDateChange = (event) => {
+  //   props.setDate(event.target.value);
+  // };
 
   const changeTitle = (event) => {
     // const targetValue = event.target.value;
@@ -143,33 +125,94 @@ function MyForm(props) {
     setSelectedValue(targetValue);
   };
 
+  const changeSelect = (event) => {
+    const { name, value } = event.target; // select 태그의 name과 value를 가져옴
+    setSelectedValue(event.target.options[event.target.selectedIndex].text); // 선택된 텍스트를 업데이트
+    props.setFormData({ target: { name, value } }); // 이름과 값을 올바르게 설정하여 handleInputChange 호출
+  };
+
   const [selectedValue, setSelectedValue] = useState();
 
+  /*   const [formData, setFormData] = useState({
+    icategory: "",
+    amount: "",
+    purpose: "",
+    date: "",
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target; // name과 value를 e.target에서 추출
+
+    // 기존 formData를 복사하고, 변경된 name 필드의 값을 업데이트
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  }; */
+
+      // 폼 제출 시 실행되는 함수
+    const handleSubmit = async (e) => {
+      e.preventDefault(); // 기본 폼 제출 동작 방지
+      console.log(props.formData);
+      try {
+        const response = await axios.post("http://localhost:8080/api/history", props.formData);
+        console.log("Response from server:", response.data);
+        alert("등록 완료 !");
+      } catch (error) {
+        console.error("There was an error submitting the form!", error);
+        alert("등록 실패...");
+      }
+    };
+
   return (
-    // <form>
+    <form onSubmit={handleSubmit}>
     <div className="form-container">
       <input
         type="date"
+        id="date"
+        name="date"
         className="form-date"
-        value={formattedDate}
-        onChange={handleDateChange}
+        value={props.formData.date}
+        onChange={props.setFormData}
+        required
       ></input>
-      <select onChange={changeTitle}>
-        <option value="food">식비</option>
-        <option value="banana">교통비</option>
-        <option value="orange">공과금</option>
-        <option value="melon">기타</option>
+      <select
+        id="icategory"
+        name="icategory"
+        value={props.formData.icategory}
+        onChange={changeSelect}
+      >
+        <option value="1" selected>식비</option>
+        <option value="2">교통비</option>
+        <option value="3">공과금</option>
+        <option value="4">기타</option>
       </select>
       <input
         type="text"
         className="form-title"
+        id="purpose"
+        name="purpose"
         placeholder="사용처"
-        value={selectedValue}
+        value={props.formData.purpose}
+        onChange={props.setFormData}
+        required
+        autoComplete="off"
       />
-      <input className="form-expense" placeholder="금액"></input>
-      <button className="form-submit">SUBMIT</button>
+      <input
+        className="form-expense"
+        placeholder="금액"
+        id="amount"
+        name="amount"
+        value={props.formData.amount}
+        onChange={props.setFormData}
+        required
+        autoComplete="off"
+      ></input>
+      <button className="form-submit" type="submit">
+        SUBMIT
+      </button>
     </div>
-    // </form>
+    </form>
   );
 }
 
@@ -236,7 +279,7 @@ function App() {
                     </li>
                     <li>
                       <button>
-                        <NavLink to="/list">통계</NavLink>
+                        <NavLink to="/list">내역</NavLink>
                       </button>
                     </li>
                     <li>
