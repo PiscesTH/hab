@@ -83,11 +83,9 @@ function SecondPage() {
     fetchData(); // 함수 호출
   }, []);
 
-/*   useEffect(() => {
-    if (historyList) {
-      console.log(historyList); // historyList가 변경될 때마다 실행
-    }
-  }, [historyList]); // historyList가 변경될 때마다 실행 */
+  const addHistory = (newHistory) => {
+    setHistoryList((prevList) => [...prevList, newHistory]);
+  };
 
   return (
     <div className="second-page-container">
@@ -103,7 +101,7 @@ function SecondPage() {
         prev2Label={null}
         minDetail="year"
       ></Calendar>
-      <MyForm formData={formData} setFormData={handleInputChange} />
+      <MyForm formData={formData} setFormData={handleInputChange} addHistory = {addHistory} />
       <div className="read">
         <List data={historyList}></List>
       </div>
@@ -157,6 +155,7 @@ function MyForm(props) {
       try {
         const response = await axios.post("http://localhost:8080/api/history", props.formData);
         console.log("Response from server:", response.data);
+        props.addHistory(response.data.data)
         alert("등록 완료 !");
       } catch (error) {
         console.error("There was an error submitting the form!", error);

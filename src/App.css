@@ -280,6 +280,7 @@ span {
 .form-container {
   grid-area: form;
   width: 98%;
+  height: 100%;
   padding: 20px;
   background-color: #faf8f3;
   border-radius: 15px;
