@@ -4,38 +4,31 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 const data = [
   {
     name: 'Page A',
-    pv: 2400,
-    amt: 2400,
+    total: 2400
   },
   {
     name: 'Page B',
-    pv: 1398,
-    amt: 2210,
+    total: 1398
   },
   {
     name: 'Page C',
-    pv: 9800,
-    amt: 2290,
+    total: 9800
   },
   {
     name: 'Page D',
-    pv: 3908,
-    amt: 2000,
+    total: 3908
   },
   {
     name: 'Page E',
-    pv: 4800,
-    amt: 2181,
+    total: 4800
   },
   {
     name: 'Page F',
-    pv: 3800,
-    amt: 2500,
+    total: 3800
   },
   {
     name: 'Page G',
-    pv: 4300,
-    amt: 2100,
+    total: 4300
   },
 ];
 
@@ -60,7 +53,7 @@ export default class Example extends PureComponent {
           <YAxis />
           <Tooltip />
           <Legend />
-          <Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{ r: 8 }} />
+          <Line type="monotone" dataKey="total" stroke="#8884d8" activeDot={{ r: 8 }} />
         </LineChart>
       </ResponsiveContainer>
     );
