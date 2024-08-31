@@ -42,9 +42,120 @@ function MainPage() {
   );
 }
 
+function SelectOption(props) {
+  return (
+    <option value={props.icategory} selected={props.selected}>
+      {props.category}
+    </option>
+  );
+}
+
+function MyForm(props) {
+  const changeTitle = (event) => {
+    // const targetValue = event.target.value;
+    const targetValue = event.target.options[event.target.selectedIndex].text;
+    // document.querySelector('form-title').setAttribute('value', {targetValue});
+    setSelectedValue(targetValue);
+  };
+
+  const changeSelect = (event) => {
+    const { name, value } = event.target; // select 태그의 name과 value를 가져옴
+    setSelectedValue(event.target.options[event.target.selectedIndex].text); // 선택된 텍스트를 업데이트
+    props.setFormData({ target: { name, value } }); // 이름과 값을 올바르게 설정하여 handleInputChange 호출
+  };
+
+  const [selectedValue, setSelectedValue] = useState();
+
+  // 폼 제출 시 실행되는 함수
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // 기본 폼 제출 동작 방지
+    console.log(props.formData);
+    try {
+      await axios.post(
+        "http://localhost:8080/api/history",
+        props.formData
+      );
+      const addedHistory = {
+        amount: props.formData.amount,
+        purpose: props.formData.purpose,
+        date: props.formData.date,
+        category: {},
+      };
+
+      const matchedCategory = props.category.find(
+        (cat) => cat.icategory == props.formData.icategory
+      );
+      if (matchedCategory) {
+        addedHistory.category = matchedCategory;
+      }
+      console.log(addedHistory);
+      props.addHistory(addedHistory);
+      alert("등록 완료 !");
+    } catch (error) {
+      console.error("There was an error submitting the form!", error);
+      alert("등록 실패...");
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <div className="form-container">
+        <input
+          type="date"
+          id="date"
+          name="date"
+          className="form-date"
+          value={props.formData.date}
+          onChange={props.setFormData}
+          required
+        ></input>
+        <select
+          id="icategory"
+          name="icategory"
+          value={props.formData.icategory}
+          onChange={changeSelect}
+        >
+          {props.category.map((item, index) => (
+            <SelectOption
+              key={item.icategory}
+              icategory={item.icategory}
+              category={item.category}
+              selected={index === 0}
+            ></SelectOption>
+          ))}
+        </select>
+        <input
+          type="text"
+          className="form-title"
+          id="purpose"
+          name="purpose"
+          placeholder="메모"
+          value={props.formData.purpose}
+          onChange={props.setFormData}
+          required
+          autoComplete="off"
+        />
+        <input
+          className="form-expense"
+          placeholder="금액"
+          id="amount"
+          name="amount"
+          value={props.formData.amount}
+          onChange={props.setFormData}
+          required
+          autoComplete="off"
+        ></input>
+        <button className="form-submit" type="submit">
+          SUBMIT
+        </button>
+      </div>
+    </form>
+  );
+}
+
 function SecondPage() {
   const [formData, setFormData] = useState({
-    icategory: "",
+    icategory: "1",
     amount: "",
     purpose: "",
     date: moment(new Date()).format("YYYY-MM-DD"),
@@ -70,17 +181,20 @@ function SecondPage() {
     }));
   };
   const [historyList, setHistoryList] = useState([]);
+  const [category, setCategory] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await axios.get("http://localhost:8080/api/history");
         setHistoryList(res.data.data); // 데이터를 상태에 설정
+        const res2 = await axios.get("http://localhost:8080/api/category");
+        setCategory(res2.data.data);
       } catch (err) {
         console.log(err); // 에러 처리
       }
     };
-    fetchData(); // 함수 호출
+    fetchData();
   }, []);
 
   const addHistory = (newHistory) => {
@@ -101,117 +215,16 @@ function SecondPage() {
         prev2Label={null}
         minDetail="year"
       ></Calendar>
-      <MyForm formData={formData} setFormData={handleInputChange} addHistory = {addHistory} />
+      <MyForm
+        formData={formData}
+        setFormData={handleInputChange}
+        addHistory={addHistory}
+        category={category}
+      />
       <div className="read">
         <List data={historyList}></List>
       </div>
     </div>
-  );
-}
-
-function MyForm(props) {
-  // const formattedDate = moment(props.formData.date).format("YYYY-MM-DD");
-
-  // const handleDateChange = (event) => {
-  //   props.setDate(event.target.value);
-  // };
-
-  const changeTitle = (event) => {
-    // const targetValue = event.target.value;
-    const targetValue = event.target.options[event.target.selectedIndex].text;
-    // document.querySelector('form-title').setAttribute('value', {targetValue});
-    setSelectedValue(targetValue);
-  };
-
-  const changeSelect = (event) => {
-    const { name, value } = event.target; // select 태그의 name과 value를 가져옴
-    setSelectedValue(event.target.options[event.target.selectedIndex].text); // 선택된 텍스트를 업데이트
-    props.setFormData({ target: { name, value } }); // 이름과 값을 올바르게 설정하여 handleInputChange 호출
-  };
-
-  const [selectedValue, setSelectedValue] = useState();
-
-  /*   const [formData, setFormData] = useState({
-    icategory: "",
-    amount: "",
-    purpose: "",
-    date: "",
-  });
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target; // name과 value를 e.target에서 추출
-
-    // 기존 formData를 복사하고, 변경된 name 필드의 값을 업데이트
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
-  }; */
-
-      // 폼 제출 시 실행되는 함수
-    const handleSubmit = async (e) => {
-      e.preventDefault(); // 기본 폼 제출 동작 방지
-      console.log(props.formData);
-      try {
-        const response = await axios.post("http://localhost:8080/api/history", props.formData);
-        console.log("Response from server:", response.data);
-        props.addHistory(response.data.data)
-        alert("등록 완료 !");
-      } catch (error) {
-        console.error("There was an error submitting the form!", error);
-        alert("등록 실패...");
-      }
-    };
-
-  return (
-    <form onSubmit={handleSubmit}>
-    <div className="form-container">
-      <input
-        type="date"
-        id="date"
-        name="date"
-        className="form-date"
-        value={props.formData.date}
-        onChange={props.setFormData}
-        required
-      ></input>
-      <select
-        id="icategory"
-        name="icategory"
-        value={props.formData.icategory}
-        onChange={changeSelect}
-      >
-        <option value="1" selected>식비</option>
-        <option value="2">교통비</option>
-        <option value="3">공과금</option>
-        <option value="4">기타</option>
-      </select>
-      <input
-        type="text"
-        className="form-title"
-        id="purpose"
-        name="purpose"
-        placeholder="사용처"
-        value={props.formData.purpose}
-        onChange={props.setFormData}
-        required
-        autoComplete="off"
-      />
-      <input
-        className="form-expense"
-        placeholder="금액"
-        id="amount"
-        name="amount"
-        value={props.formData.amount}
-        onChange={props.setFormData}
-        required
-        autoComplete="off"
-      ></input>
-      <button className="form-submit" type="submit">
-        SUBMIT
-      </button>
-    </div>
-    </form>
   );
 }
 
