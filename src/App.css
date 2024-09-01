@@ -154,6 +154,12 @@ p {
   float: inline-start;
 }
 
+/* line chart의 글씨 크기 조절 */
+.recharts-legend-item {
+  font-size: 20px;
+  margin-left: 30px;
+}
+
 /* expenditure */
 .expenditure {
   grid-area: expenditure;
@@ -232,11 +238,12 @@ footer {
   height: 90px;
   border-radius: 20px 20px 0 0;
 }
-span {
+
+/* span {
   font-size: 24px;
   font-weight: 600;
   color: #d392f1dc;
-}
+} */
 
 .react-calendar__navigation button:disabled {
   background-color: pink;

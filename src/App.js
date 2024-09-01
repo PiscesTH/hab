@@ -12,13 +12,44 @@ import { faPen, faTrash, faEllipsis } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 
 function MainPage() {
-  const [statistics, setStatistics] = useState({});
+  const [statistics, setStatistics] = useState({ monthly: [], weekly: [], income: {} });
+  const [expenditure, setExpenditure] = useState(0);
 
+  const splitDataByName = (data, targetName) => {
+    const result = {
+      included: [],
+      excluded: []
+    };
+    let sum = 0;
+    data.forEach(item => {
+      if (item.name === targetName) {
+        result.excluded.push(item);
+      } else {
+        result.included.push(item);
+        sum += item.total;
+      }
+    });
+    setExpenditure(sum);
+  
+    return result;
+  };
   useEffect(() => {
     const getStatisticsData = async () => {
       try {
-        const res = await axios.get("http://localhost:8080/api/history/statistics");
-        setStatistics(res.data.data); // 데이터를 상태에 설정
+        const res = await axios.get(
+          "http://localhost:8080/api/history/statistics"
+        );
+        const data = res.data.data;
+        // '수입' 객체를 제외한 배열과 '수입' 객체를 포함한 배열 생성
+        const { included: filteredItems, excluded: removedItems } = splitDataByName(data.monthly, '수입');
+        
+        console.log('Filtered Items:', filteredItems);
+        console.log('Removed Items:', removedItems);
+        
+        data.monthly = filteredItems;
+        data.push({income:{removedItems}})
+        console.log(data);
+        setStatistics(data); // 데이터를 상태에 설정
       } catch (err) {
         console.log(err); // 에러 처리
       }
@@ -37,19 +68,19 @@ function MainPage() {
       <div className="ratio">
         <div>
           <p>지출 비율</p>
-          <PieChart data = {statistics.monthly}></PieChart>
+          <PieChart data={statistics.monthly}></PieChart>
         </div>
       </div>
       <div className="expenditure">
         <div>
           <p className="a">이번달 지출</p>
-          <p className="b">500000 원</p>
+          <p className="b">{expenditure} 원</p>
         </div>
       </div>
       <div className="graph">
         <div>
           <p>일별 지출</p>
-          <LineChart data = {statistics.weekly}></LineChart>
+          <LineChart data={statistics.weekly}></LineChart>
         </div>
       </div>
     </div>
@@ -85,10 +116,7 @@ function MyForm(props) {
     e.preventDefault(); // 기본 폼 제출 동작 방지
     console.log(props.formData);
     try {
-      await axios.post(
-        "http://localhost:8080/api/history",
-        props.formData
-      );
+      await axios.post("http://localhost:8080/api/history", props.formData);
       const addedHistory = {
         amount: props.formData.amount,
         purpose: props.formData.purpose,
