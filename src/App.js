@@ -12,6 +12,20 @@ import { faPen, faTrash, faEllipsis } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 
 function MainPage() {
+  const [statistics, setStatistics] = useState({});
+
+  useEffect(() => {
+    const getStatisticsData = async () => {
+      try {
+        const res = await axios.get("http://localhost:8080/api/history/statistics");
+        setStatistics(res.data.data); // 데이터를 상태에 설정
+      } catch (err) {
+        console.log(err); // 에러 처리
+      }
+    };
+    getStatisticsData();
+  }, []);
+
   return (
     <div className="main-container">
       <div className="income">
@@ -35,7 +49,7 @@ function MainPage() {
       <div className="graph">
         <div>
           <p>일별 지출</p>
-          <LineChart></LineChart>
+          <LineChart data = {statistics.weekly}></LineChart>
         </div>
       </div>
     </div>
