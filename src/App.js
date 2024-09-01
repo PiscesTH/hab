@@ -37,7 +37,7 @@ function MainPage() {
       <div className="ratio">
         <div>
           <p>지출 비율</p>
-          <PieChart></PieChart>
+          <PieChart data = {statistics.monthly}></PieChart>
         </div>
       </div>
       <div className="expenditure">

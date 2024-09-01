@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React from "react";
 import {
   LineChart,
   Line,
@@ -10,7 +10,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const Example = (props) => {
+const drawChart = (props) => {
   const transformData = (data) => {
     return data.map(item => {
       const dateParts = item.name.split('-'); 
@@ -23,6 +23,8 @@ const Example = (props) => {
     });
   };
 
+  const data = props.data || [];
+
   const yAxisTickFormatter = (value) => {
     if (value === 0) return ''; // 값이 0이면 빈 문자열 반환
     return `${value.toLocaleString()}원`;
@@ -33,7 +35,7 @@ const Example = (props) => {
       <LineChart
         width={400}
         height={400}
-        data={transformData(props.data)}
+        data={transformData(data)}
         margin={{
           top: 5,
           right: 30,
@@ -52,4 +54,4 @@ const Example = (props) => {
   );
 };
 
-export default React.memo(Example); // React.memo를 사용하여 메모이제이션
+export default React.memo(drawChart); // React.memo를 사용하여 메모이제이션

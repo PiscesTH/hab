@@ -1,14 +1,14 @@
-import React, { PureComponent, useCallback, useState } from "react";
+import React from "react";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 
-const data = [
+/* const data = [
   { name: "Group A", total: 400 },
   { name: "Group B", total: 300 },
   { name: "Group C", total: 300 },
   { name: "Group D", total: 200 },
-];
+]; */
 
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042" /* , "#ECB2F8" */];
 
 const RADIAN = Math.PI / 180;
 const renderCustomizedLabel = ({
@@ -37,30 +37,28 @@ const renderCustomizedLabel = ({
   );
 };
 
-export default class Chart extends PureComponent {
-  render() {
-    return (
-      <ResponsiveContainer  width={'80%' } height={'80%'}>
-        <PieChart>
-          <Pie
-            data={data}
-            cx={'50%'}
-            cy={'42%'}
-            labelLine={false}
-            label={renderCustomizedLabel}
-            outerRadius={120} /* 차트 자체의 크기 */
-            fill="#8884d8"
-            dataKey="total"
-          >
-            {data.map((entry, index) => (
-              <Cell
-                key={`cell-${index}`}
-                fill={COLORS[index % COLORS.length]}
-              />
-            ))}
-          </Pie>
-        </PieChart>
-      </ResponsiveContainer>
-    );
-  }
-}
+const drawChart = (props) => {
+  const data = props.data || [];
+  console.log(data);
+  return (
+    <ResponsiveContainer width={"80%"} height={"80%"}>
+      <PieChart>
+        <Pie
+          data={data}
+          cx={"50%"}
+          cy={"42%"}
+          labelLine={false}
+          label={renderCustomizedLabel}
+          outerRadius={120}
+          dataKey="total"
+        >
+          {data.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+          ))}
+        </Pie>
+      </PieChart>
+    </ResponsiveContainer>
+  );
+};
+
+export default React.memo(drawChart);
