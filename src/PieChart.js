@@ -1,5 +1,5 @@
 import React from "react";
-import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#ECB2F8"];
 
@@ -19,8 +19,8 @@ const renderCustomizedLabel = ({
   const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
   const labelLines = [
-    `${payload.name}`,          // 첫 번째 줄
-    `${(percent * 100).toFixed(0)}%` // 두 번째 줄
+    `${payload.name}`,
+    `${(percent * 100).toFixed(0)}%`
   ];
 
   return (
@@ -29,8 +29,8 @@ const renderCustomizedLabel = ({
         <text
           key={`line-${i}`}
           x={x}
-          y={y + i * 16} // 줄 간격을 조절합니다.
-          fill="black"  // 텍스트 색상
+          y={y + i * 16} // 줄 간격 조절.
+          fill="black"
           textAnchor="middle"
           dominantBaseline="central"
           fontSize={14}
@@ -42,25 +42,16 @@ const renderCustomizedLabel = ({
   );
 };
 
-/*   return (
-    <text
-      x={x}
-      y={y}
-      fill="black"
-      // textAnchor={x > cx ? "start" : "end"}
-      textAnchor="middle"
-      dominantBaseline="central"
-    >
-      {`${(percent * 100).toFixed(0)}%`}
-    </text>
-  );
-}; */
+const valueFormatter = (value, name, props) => {
+  return [`${value.toLocaleString()}원`, name]; // 값에 "원" 단위를 추가하고 콤마 형식 적용
+};
 
 const drawChart = (props) => {
   const data = props.data || [];
   return (
     <ResponsiveContainer width={"80%"} height={"80%"}>
       <PieChart>
+        <Tooltip formatter={valueFormatter}/>
         <Pie
           data={data}
           cx={"50%"}
