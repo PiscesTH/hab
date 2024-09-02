@@ -45,7 +45,8 @@ function MainPage() {
         );
         const data = res.data.data;
         // '수입' 객체를 제외한 배열과 '수입' 객체를 포함한 배열 생성
-        const { included: filteredItems, excluded: removedItems } = splitDataByName(data.monthly, "수입");
+        const { included: filteredItems, excluded: removedItems } =
+          splitDataByName(data.monthly, "수입");
 
         setStatistics({
           monthly: filteredItems,
@@ -66,7 +67,9 @@ function MainPage() {
       <div className="income">
         <div>
           <p className="a">이번달 수입</p>
-          <p className="b">{statistics.income.length > 0 ? statistics.income[0].total : 0} 원</p>
+          <p className="b">
+            {statistics.income.length > 0 ? statistics.income[0].total : 0} 원
+          </p>
         </div>
       </div>
       <div className="ratio">
@@ -228,6 +231,7 @@ function SecondPage() {
   };
   const [historyList, setHistoryList] = useState([]);
   const [category, setCategory] = useState([]);
+  const [filterType, setFilterType] = useState("all"); // 필터 상태 추가
 
   useEffect(() => {
     const fetchData = async () => {
@@ -245,6 +249,20 @@ function SecondPage() {
 
   const addHistory = (newHistory) => {
     setHistoryList((prevList) => [...prevList, newHistory]);
+  };
+
+  // 필터 변경 핸들러
+  const handleFilterChange = (filter) => {
+    setFilterType(filter);
+  };
+
+  // 필터링된 리스트 생성 함수
+  const filterHistory = (targetDate) => {
+    if (filterType === "all") {
+      return historyList;
+    } else if (filterType === "byDate") {
+      return [...historyList].filter((item) => item.date === targetDate);
+    }
   };
 
   return (
@@ -268,7 +286,23 @@ function SecondPage() {
         category={category}
       />
       <div className="read">
-        <List data={historyList} ></List>
+        <div className="filter-buttons">
+          <button
+            className={`filter-button ${filterType === "all" ? "active" : ""}`}
+            onClick={() => handleFilterChange("all")}
+          >
+            전체
+          </button>
+          <button
+            className={`filter-button ${
+              filterType === "byDate" ? "active" : ""
+            }`}
+            onClick={() => handleFilterChange("byDate")}
+          >
+            날짜별
+          </button>
+        </div>
+        <List data={filterHistory(formData.date)}></List>
       </div>
     </div>
   );

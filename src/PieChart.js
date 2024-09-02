@@ -24,6 +24,7 @@ const renderCustomizedLabel = ({
   ];
 
   return (
+    // <g>그룹태그
     <g>
       {labelLines.map((line, i) => (
         <text
