@@ -12,16 +12,20 @@ import { faPen, faTrash, faEllipsis } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 
 function MainPage() {
-  const [statistics, setStatistics] = useState({ monthly: [], weekly: [], income: {} });
+  const [statistics, setStatistics] = useState({
+    monthly: [],
+    weekly: [],
+    income: [],
+  });
   const [expenditure, setExpenditure] = useState(0);
 
   const splitDataByName = (data, targetName) => {
     const result = {
       included: [],
-      excluded: []
+      excluded: [],
     };
     let sum = 0;
-    data.forEach(item => {
+    data.forEach((item) => {
       if (item.name === targetName) {
         result.excluded.push(item);
       } else {
@@ -30,7 +34,7 @@ function MainPage() {
       }
     });
     setExpenditure(sum);
-  
+
     return result;
   };
   useEffect(() => {
@@ -41,15 +45,13 @@ function MainPage() {
         );
         const data = res.data.data;
         // '수입' 객체를 제외한 배열과 '수입' 객체를 포함한 배열 생성
-        const { included: filteredItems, excluded: removedItems } = splitDataByName(data.monthly, '수입');
-        
-        console.log('Filtered Items:', filteredItems);
-        console.log('Removed Items:', removedItems);
-        
-        data.monthly = filteredItems;
-        data.push({income:{removedItems}})
-        console.log(data);
-        setStatistics(data); // 데이터를 상태에 설정
+        const { included: filteredItems, excluded: removedItems } = splitDataByName(data.monthly, "수입");
+
+        setStatistics({
+          monthly: filteredItems,
+          weekly: data.weekly,
+          income: removedItems,
+        }); // 데이터를 상태에 설정
       } catch (err) {
         console.log(err); // 에러 처리
       }
@@ -57,12 +59,14 @@ function MainPage() {
     getStatisticsData();
   }, []);
 
+  console.log(statistics);
+
   return (
     <div className="main-container">
       <div className="income">
         <div>
           <p className="a">이번달 수입</p>
-          <p className="b">1000000 원</p>
+          <p className="b">{statistics.income.length > 0 ? statistics.income[0].total : 0} 원</p>
         </div>
       </div>
       <div className="ratio">
@@ -264,7 +268,7 @@ function SecondPage() {
         category={category}
       />
       <div className="read">
-        <List data={historyList}></List>
+        <List data={historyList} ></List>
       </div>
     </div>
   );
