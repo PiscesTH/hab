@@ -219,9 +219,10 @@ footer {
   position: relative;
   grid-area: read;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   padding-top: 30px;
+  min-height: 700px;
 }
 
 /* calendar */
@@ -501,4 +502,8 @@ textarea:focus {
   background-color: #ccd5ae;
 }
 
+.login-container {
+  width: 100%;
+  height: 800px;
+}
 

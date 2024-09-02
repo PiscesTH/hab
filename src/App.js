@@ -10,6 +10,8 @@ import moment from "moment";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faTrash, faEllipsis } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+import LoginPage from "./LoginPage.js";
+import SignupPage from "./SignupPage.js";
 
 function MainPage() {
   const [statistics, setStatistics] = useState({
@@ -60,8 +62,6 @@ function MainPage() {
     getStatisticsData();
   }, []);
 
-  console.log(statistics);
-
   return (
     <div className="main-container">
       <div className="income">
@@ -86,7 +86,7 @@ function MainPage() {
       </div>
       <div className="graph">
         <div>
-          <p>일별 지출</p>
+          <p>주간 지출</p>
           <LineChart data={statistics.weekly}></LineChart>
         </div>
       </div>
@@ -95,20 +95,16 @@ function MainPage() {
 }
 
 function SelectOption(props) {
-  return (
-    <option value={props.icategory} selected={props.selected}>
-      {props.category}
-    </option>
-  );
+  return <option value={props.icategory}>{props.category}</option>;
 }
 
 function MyForm(props) {
-  const changeTitle = (event) => {
+  /*   const changeTitle = (event) => {
     // const targetValue = event.target.value;
     const targetValue = event.target.options[event.target.selectedIndex].text;
     // document.querySelector('form-title').setAttribute('value', {targetValue});
     setSelectedValue(targetValue);
-  };
+  }; */
 
   const changeSelect = (event) => {
     const { name, value } = event.target; // select 태그의 name과 value를 가져옴
@@ -137,11 +133,9 @@ function MyForm(props) {
       if (matchedCategory) {
         addedHistory.category = matchedCategory;
       }
-      console.log(addedHistory);
       props.addHistory(addedHistory);
       alert("등록 완료 !");
     } catch (error) {
-      console.error("There was an error submitting the form!", error);
       alert("등록 실패...");
     }
   };
@@ -169,7 +163,6 @@ function MyForm(props) {
               key={item.icategory}
               icategory={item.icategory}
               category={item.category}
-              selected={index === 0}
             ></SelectOption>
           ))}
         </select>
@@ -217,7 +210,6 @@ function SecondPage() {
       ...prevFormData,
       date: formattedDate, // date 필드만 업데이트
     }));
-    console.log(formattedDate);
   };
 
   const handleInputChange = (e) => {
@@ -231,7 +223,7 @@ function SecondPage() {
   };
   const [historyList, setHistoryList] = useState([]);
   const [category, setCategory] = useState([]);
-  const [filterType, setFilterType] = useState("all"); // 필터 상태 추가
+  const [filterType, setFilterType] = useState("byDate"); // 필터 상태 추가
 
   useEffect(() => {
     const fetchData = async () => {
@@ -317,6 +309,12 @@ function List({ data }) {
     setVisibleItems((prevVisibleItems) => prevVisibleItems + 5);
   };
 
+  /*   if (data.length == 0) {
+    const targetEls = document.getElementsByClassName("read");
+    for (let element of targetEls) {
+      element.style.alignItems = "flex-start";
+    }
+  } */
   return (
     <div className="list-container">
       {data.slice(0, visibleItems).map((item, index) => (
@@ -375,7 +373,9 @@ function App() {
                       </button>
                     </li>
                     <li>
-                      <button>로그인</button>
+                      <button>
+                        <NavLink to="/login">로그인</NavLink>
+                      </button>
                     </li>
                   </ul>
                 </nav>
@@ -386,6 +386,8 @@ function App() {
             <Routes>
               <Route exact="true" path="/" element={<MainPage />}></Route>
               <Route path="/list" element={<SecondPage />}></Route>
+              <Route path="/login" element={<LoginPage />}></Route>
+              <Route path="/register" element={<SignupPage />}></Route>
             </Routes>
           </main>
           <footer>Copyright 2024. TH All rights reserved.</footer>
