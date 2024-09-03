@@ -150,6 +150,7 @@ const styles = {
   error: {
     color: 'red',
     marginBottom: '15px',
+    fontSize: '16px'
   },
 };
 
