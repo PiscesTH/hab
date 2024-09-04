@@ -9,9 +9,11 @@ import "react-calendar/dist/Calendar.css";
 import moment from "moment";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faTrash, faEllipsis } from "@fortawesome/free-solid-svg-icons";
-import axios from "axios";
+import axios from "./axios";
 import LoginPage from "./LoginPage.js";
 import SignupPage from "./SignupPage.js";
+import Header from "./header.js";
+import { AuthProvider } from "./AuthContext.js";
 
 function MainPage() {
   const [statistics, setStatistics] = useState({
@@ -42,9 +44,7 @@ function MainPage() {
   useEffect(() => {
     const getStatisticsData = async () => {
       try {
-        const res = await axios.get(
-          "http://localhost:8080/api/history/statistics"
-        );
+        const res = await axios.get("/history/statistics");
         const data = res.data.data;
         // '수입' 객체를 제외한 배열과 '수입' 객체를 포함한 배열 생성
         const { included: filteredItems, excluded: removedItems } =
@@ -119,7 +119,7 @@ function MyForm(props) {
     e.preventDefault(); // 기본 폼 제출 동작 방지
     console.log(props.formData);
     try {
-      await axios.post("http://localhost:8080/api/history", props.formData);
+      await axios.post("/history", props.formData);
       const addedHistory = {
         amount: props.formData.amount,
         purpose: props.formData.purpose,
@@ -228,9 +228,9 @@ function SecondPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get("http://localhost:8080/api/history");
+        const res = await axios.get("/history");
         setHistoryList(res.data.data); // 데이터를 상태에 설정
-        const res2 = await axios.get("http://localhost:8080/api/category");
+        const res2 = await axios.get("/category");
         setCategory(res2.data.data);
       } catch (err) {
         console.log(err); // 에러 처리
@@ -349,51 +349,26 @@ function List({ data }) {
 
 function App() {
   return (
-    <div className="App">
-      <div className="body">
-        <div className="container">
-          <header>
-            <div className="header-container">
-              <h1 className="th">
-                <Link to="/">TH</Link>
-              </h1>
-              <div className="menu">
-                <nav>
-                  <ul className="header-nav">
-                    <li>
-                      <button>
-                        <NavLink exact="true" to="/">
-                          홈
-                        </NavLink>
-                      </button>
-                    </li>
-                    <li>
-                      <button>
-                        <NavLink to="/list">내역</NavLink>
-                      </button>
-                    </li>
-                    <li>
-                      <button>
-                        <NavLink to="/login">로그인</NavLink>
-                      </button>
-                    </li>
-                  </ul>
-                </nav>
-              </div>
-            </div>
-          </header>
-          <main>
-            <Routes>
-              <Route exact="true" path="/" element={<MainPage />}></Route>
-              <Route path="/list" element={<SecondPage />}></Route>
-              <Route path="/login" element={<LoginPage />}></Route>
-              <Route path="/register" element={<SignupPage />}></Route>
-            </Routes>
-          </main>
-          <footer>Copyright 2024. TH All rights reserved.</footer>
+    <AuthProvider>
+      <div className="App">
+        <div className="body">
+          <div className="container">
+            <header>
+              <Header />
+            </header>
+            <main>
+              <Routes>
+                <Route exact="true" path="/" element={<MainPage />}></Route>
+                <Route path="/list" element={<SecondPage />}></Route>
+                <Route path="/login" element={<LoginPage />}></Route>
+                <Route path="/register" element={<SignupPage />}></Route>
+              </Routes>
+            </main>
+            <footer>Copyright 2024. TH All rights reserved.</footer>
+          </div>
         </div>
       </div>
-    </div>
+    </AuthProvider>
   );
 }
 

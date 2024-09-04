@@ -22,7 +22,7 @@ const drawChart = (props) => {
       };
     });
   };
-
+  
   const data = props.data || [];
 
   const yAxisTickFormatter = (value) => {

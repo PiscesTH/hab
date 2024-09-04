@@ -1,20 +1,22 @@
+import axios from './axios';
 import React, { useState } from 'react';
-
+import { useNavigate } from "react-router-dom";
 function SignupPage() {
   // 입력 필드 상태 관리
-  const [username, setUsername] = useState('');
+  const [uid, setUid] = useState('');
   const [password, setPassword] = useState('');
-  const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [passwordForConfirm, setPasswordForConfirm] = useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
-
+  let navigate = useNavigate();
+  
   // 회원가입 버튼 클릭 시 호출되는 함수
-  const handleSignup = (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault(); // 페이지 새로고침 방지
 
     // 간단한 유효성 검사
-    if (!username || !password || !name || !email) {
+    if (!uid || !password || !name || !email) {
       setError('모든 필드를 입력해주세요.');
       return;
     }
@@ -31,14 +33,21 @@ function SignupPage() {
       return;
     }
 
-    if (password !== passwordConfirm) {
+    if (password !== passwordForConfirm) {
       setError('비밀번호가 다릅니다.')
       return
     }
-
+    const formData = {uid:uid, upw:password, nm:name, email: email};
     // 에러가 없을 경우 회원가입 로직 수행 (예: 서버에 데이터 전송)
     setError('');
-    alert(`회원가입 성공!\n아이디: ${username}\n이름: ${name}\n이메일: ${email}`);
+  
+    try {
+      await axios.post("/user/sign-up", formData);
+      alert("회원가입 완료 !");
+      navigate("/login");
+    } catch (error) {
+      alert("회원가입 실패...");
+    }
     // 회원가입 로직 추가 (예: 서버와 통신)
   };
 
@@ -47,12 +56,12 @@ function SignupPage() {
       <h2>회원가입</h2>
       <form onSubmit={handleSignup} style={styles.form}>
         <div style={styles.inputContainer}>
-          <label htmlFor="username">아이디</label>
+          <label htmlFor="uid">아이디</label>
           <input
             type="text"
-            id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            id="uid"
+            value={uid}
+            onChange={(e) => setUid(e.target.value)}
             placeholder="아이디를 입력하세요"
             style={styles.input}
             autoComplete='off'
@@ -74,9 +83,9 @@ function SignupPage() {
           <label htmlFor="password">비밀번호 확인</label>
           <input
             type="password"
-            id="passwordConfirm"
-            value={passwordConfirm}
-            onChange={(e) => setPasswordConfirm(e.target.value)}
+            id="passwordForConfirm"
+            value={passwordForConfirm}
+            onChange={(e) => setPasswordForConfirm(e.target.value)}
             placeholder="비밀번호를 다시 입력하세요"
             style={styles.input}
             autoComplete='off'

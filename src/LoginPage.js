@@ -1,26 +1,43 @@
+import axios from "./axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
+import { useAuth } from "./AuthContext";
 
 function LoginPage() {
   // useState 훅을 사용하여 이메일과 비밀번호 상태를 관리합니다.
   const [uid, setUid] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const { login } = useAuth();
 
   let navigate = useNavigate();
 
   // 로그인 버튼 클릭 시 호출되는 함수입니다.
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault(); // 페이지 새로고침 방지
 
     // 예제: 이메일과 비밀번호가 비어 있는지 확인
     if (uid === "" || password === "") {
       setError("아이디 비밀번호를 입력해주세요.");
-    } else {
-      // 실제 로그인 로직은 서버와의 통신으로 구현해야 합니다.
-      setError("");
-      alert(`로그인 성공! \n아이디: ${uid} \n비밀번호: ${password}`);
-      // 추가 로직 예시: 로그인 처리 후 페이지 이동 등
+      return;
+    }
+    try {
+      const res = await axios.post("/user/sign-in", {
+        uid: uid,
+        upw: password,
+      });
+      const accessToken = res.data.data.accessToken;
+      Cookies.set("accessToken", accessToken, {
+        expires: 1, // 쿠키 유효 기간
+        secure: true, // HTTPS에서만 사용 가능
+        sameSite: "Strict", // 같은 사이트에서만 요청
+      });
+      login(accessToken);
+      alert("로그인 성공");
+      navigate("/");
+    } catch (error) {
+      alert("로그인 실패");
     }
   };
 
