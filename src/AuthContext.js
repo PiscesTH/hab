@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
+import axios from "./axios";
 
 // AuthContext 생성
 const AuthContext = createContext();
@@ -24,8 +25,10 @@ export function AuthProvider({ children }) {
     setIsLoggedIn(true);
   };
 
-  const logout = () => {
-    localStorage.removeItem("accessToken");
+  const logout = async () => {
+    const res = await axios.post("/user/sign-out");
+    console.log(res);
+    localStorage.clear();
     setIsLoggedIn(false);
   };
 

@@ -2,6 +2,7 @@ import React from "react";
 import { useAuth } from "./AuthContext";
 import { useNavigate } from "react-router-dom";
 import { NavLink, Link } from "react-router-dom";
+
 function Header() {
   const { isLoggedIn, logout } = useAuth(); // 전역 상태 사용
   const navigate = useNavigate();
