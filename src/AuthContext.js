@@ -26,10 +26,10 @@ export function AuthProvider({ children }) {
   };
 
   const logout = async () => {
-    const res = await axios.post("/user/sign-out");
-    console.log(res);
+    await axios.post("/user/sign-out");
     localStorage.clear();
     setIsLoggedIn(false);
+    window.location.reload();
   };
 
   return (

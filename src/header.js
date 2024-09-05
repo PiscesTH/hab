@@ -10,7 +10,7 @@ function Header() {
   const handleLogout = () => {
     // 로그아웃 시 로컬 스토리지에서 토큰 제거
     logout();
-    navigate("/");
+    // navigate("/");
   };
 
   return (

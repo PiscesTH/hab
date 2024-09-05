@@ -240,7 +240,12 @@ function SecondPage() {
   }, []);
 
   const addHistory = (newHistory) => {
-    setHistoryList((prevList) => [...prevList, newHistory]);
+    setHistoryList((prevList) => {
+      if (!Array.isArray(prevList)) {
+        return [newHistory];
+      }
+      return [...prevList, newHistory];
+    });
   };
 
   // 필터 변경 핸들러
@@ -250,11 +255,17 @@ function SecondPage() {
 
   // 필터링된 리스트 생성 함수
   const filterHistory = (targetDate) => {
+    if (!Array.isArray(historyList)) {
+      return [];
+    }
+
     if (filterType === "all") {
       return historyList;
     } else if (filterType === "byDate") {
-      return [...historyList].filter((item) => item.date === targetDate);
+      return historyList.filter((item) => item.date === targetDate);
     }
+
+    return [];
   };
 
   return (

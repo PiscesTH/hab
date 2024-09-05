@@ -1,5 +1,6 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
+axios.defaults.withCredentials = true;
 
 // Axios 기본 설정
 const instance = axios.create({
