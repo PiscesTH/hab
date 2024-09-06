@@ -13,17 +13,14 @@ import {
 
 const DrawChart = (props) => {
   const isSmallScreen = useMediaQuery({ query: "(max-width: 532px)" });
-  const isSmallestScreen = useMediaQuery({ query: "(max-width: 360px)" });
 
   const transformData = (data) => {
     return data.map((item) => {
       const dateParts = item.name.split("-");
 
       // const transformedName = isSmallScreen ? `${dateParts[2]}일` : `${dateParts[1]}-${dateParts[2]}` ;
-      const transformedName = isSmallestScreen
+      const transformedName = isSmallScreen
         ? `${dateParts[2]}`
-        : isSmallScreen
-        ? `${dateParts[2]}일`
         : `${dateParts[1]}-${dateParts[2]}`;
       return {
         ...item,
