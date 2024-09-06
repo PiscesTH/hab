@@ -1,4 +1,5 @@
 import React from "react";
+import { useMediaQuery } from "react-responsive";
 import {
   LineChart,
   Line,
@@ -10,23 +11,31 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const drawChart = (props) => {
+const DrawChart = (props) => {
+  const isSmallScreen = useMediaQuery({ query: "(max-width: 532px)" });
+  const isSmallestScreen = useMediaQuery({ query: "(max-width: 360px)" });
+
   const transformData = (data) => {
-    return data.map(item => {
-      const dateParts = item.name.split('-'); 
-      const transformedName = `${dateParts[1]}-${dateParts[2]}`;
-  
+    return data.map((item) => {
+      const dateParts = item.name.split("-");
+
+      // const transformedName = isSmallScreen ? `${dateParts[2]}일` : `${dateParts[1]}-${dateParts[2]}` ;
+      const transformedName = isSmallestScreen
+        ? `${dateParts[2]}`
+        : isSmallScreen
+        ? `${dateParts[2]}일`
+        : `${dateParts[1]}-${dateParts[2]}`;
       return {
         ...item,
         name: transformedName,
       };
     });
   };
-  
+
   const data = props.data || [];
 
   const yAxisTickFormatter = (value) => {
-    if (value === 0) return ''; // 값이 0이면 빈 문자열 반환
+    if (value === 0) return ""; // 값이 0이면 빈 문자열 반환
     return `${value.toLocaleString()}원`;
   };
 
@@ -48,14 +57,20 @@ const drawChart = (props) => {
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" interval={0}/>
-        <YAxis tickFormatter={yAxisTickFormatter}/>
-        <Tooltip formatter={valueFormatter}/>
+        <XAxis dataKey="name" interval={0} />
+        <YAxis tickFormatter={yAxisTickFormatter} />
+        <Tooltip formatter={valueFormatter} />
         <Legend />
-        <Line type="monotone" dataKey="total" name="지출" stroke="#8884d8" activeDot={{ r: 8 }} />
+        <Line
+          type="monotone"
+          dataKey="total"
+          name="지출"
+          stroke="#8884d8"
+          activeDot={{ r: 8 }}
+        />
       </LineChart>
     </ResponsiveContainer>
   );
 };
 
-export default React.memo(drawChart); // React.memo를 사용하여 메모이제이션
+export default React.memo(DrawChart); // React.memo를 사용하여 메모이제이션

@@ -25,14 +25,14 @@ instance.interceptors.request.use(
   }
 );
 
-// 응답 인터셉터 설정 (예: 에러 처리)
+// 응답 인터셉터 설정
 instance.interceptors.response.use(
   (response) => response,
   (error) => {
     // 401 Unauthorized 등의 에러 처리
     if (error.response && error.response.status === 401) {
-      console.error('Unauthorized! Redirect to login...');
-      // 로그아웃 처리나 리다이렉트 등의 작업 수행
+      alert("로그인이 필요합니다.");
+      window.location.href = '/login';
     }
     
     return Promise.reject(error);

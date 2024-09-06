@@ -1,9 +1,11 @@
 import React from "react";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
+import { useMediaQuery } from "react-responsive";
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#ECB2F8"];
 
 const RADIAN = Math.PI / 180;
+
 const renderCustomizedLabel = ({
   cx,
   cy,
@@ -18,19 +20,15 @@ const renderCustomizedLabel = ({
   const x = cx + radius * Math.cos(-midAngle * RADIAN);
   const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
-  const labelLines = [
-    `${payload.name}`,
-    `${(percent * 100).toFixed(0)}%`
-  ];
+  const labelLines = [`${payload.name}`, `${(percent * 100).toFixed(0)}%`];
 
   return (
-    // <g>그룹태그
     <g>
       {labelLines.map((line, i) => (
         <text
           key={`line-${i}`}
           x={x}
-          y={y + i * 16} // 줄 간격 조절.
+          y={y + i * 16}
           fill="black"
           textAnchor="middle"
           dominantBaseline="central"
@@ -44,23 +42,35 @@ const renderCustomizedLabel = ({
 };
 
 const valueFormatter = (value, name, props) => {
-  return [`${value.toLocaleString()}원`, name]; // 값에 "원" 단위를 추가하고 콤마 형식 적용
+  return [`${value.toLocaleString()}원`, name];
 };
 
-const drawChart = (props) => {
+const DrawChart = (props) => {
+  const isSmallScreen = useMediaQuery({ query: "(max-width: 532px)" });
+  const isSmallestScreen = useMediaQuery({ query: "(max-width: 360px)" });
   const data = props.data || [];
+
+  const getOuterRadius = () => {
+    if (isSmallestScreen) {
+      return 90;
+    }
+    if (isSmallScreen) {
+      return 100;
+    }
+    return 120;
+  };
   return (
     <ResponsiveContainer width={"80%"} height={"80%"}>
       <PieChart>
-        <Tooltip formatter={valueFormatter}/>
+        <Tooltip formatter={valueFormatter} />
         <Pie
           data={data}
           cx={"50%"}
           cy={"42%"}
           labelLine={false}
           label={renderCustomizedLabel}
-          outerRadius={120}
-          innerRadius={30}
+          outerRadius={getOuterRadius}
+          innerRadius={isSmallestScreen ? 20 : 30}
           dataKey="total"
         >
           {data.map((entry, index) => (
@@ -72,4 +82,4 @@ const drawChart = (props) => {
   );
 };
 
-export default React.memo(drawChart);
+export default React.memo(DrawChart);

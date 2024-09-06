@@ -29,7 +29,7 @@ html {
 
 main {
   grid-area: main;
-  width: 1012px;
+  width: 100%;
 }
 
 .main-container {
@@ -37,7 +37,6 @@ main {
   height: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 5px;
   grid-template-rows: 1fr 1fr;
   grid-template-areas:
     "income ratio"
@@ -180,6 +179,7 @@ footer {
   align-items: center;
   justify-content: center;
   font-size: 24px;
+  width: 100%;
 }
 
 .header-container {
@@ -222,7 +222,7 @@ footer {
   align-items: flex-start;
   justify-content: center;
   padding-top: 30px;
-  min-height: 700px;
+  min-height: 400px;
 }
 
 /* calendar */
@@ -482,7 +482,7 @@ textarea:focus {
 .filter-buttons {
   position: absolute;
   top: 10px;
-  left: 50px;
+  left: 5%;
   display: flex;
   gap: 5px;
   z-index: 1;
@@ -498,7 +498,7 @@ textarea:focus {
   transition: background-color 0.3s ease;
 }
 
-.filter-button.active{
+.filter-button.active {
   background-color: #ccd5ae;
 }
 
@@ -507,3 +507,73 @@ textarea:focus {
   height: 800px;
 }
 
+@media screen and (max-width: 992px) {
+  .container {
+    max-width: 630px;
+  }
+
+  .main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  footer {
+    font-size: 20px;
+  }
+
+  .second-page-container {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    grid-template-areas:
+      "calendar"
+      "form"
+      "read";
+  }
+
+}
+
+@media screen and (max-width: 532px) {
+  .container {
+    max-width: 420px;
+  }
+
+  .main-container > div {
+    width: 400px;
+    height: 400px;
+  }
+
+  p {
+    font-size: 40px;
+  }
+
+  .b {
+    font-size: 30px !important;
+  }
+
+  footer {
+    font-size: 18px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .container {
+    min-width: 360px;
+  }
+
+  .main-container > div {
+    width: 340px;
+    height: 340px;
+  }
+  p {
+    font-size: 35px;
+  }
+
+  .b {
+    font-size: 25px !important;
+  }
+
+  footer {
+    font-size: 16px;
+  }
+}

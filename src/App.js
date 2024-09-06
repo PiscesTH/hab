@@ -14,8 +14,10 @@ import LoginPage from "./LoginPage.js";
 import SignupPage from "./SignupPage.js";
 import Header from "./header.js";
 import { AuthProvider } from "./AuthContext.js";
+import { useAuth } from "./AuthContext.js";
 
 function MainPage() {
+  const { isLoggedIn } = useAuth(); // 전역 상태 사용
   const [statistics, setStatistics] = useState({
     monthly: [],
     weekly: [],
@@ -46,7 +48,7 @@ function MainPage() {
       try {
         const res = await axios.get("/history/statistics");
         const data = res.data.data;
-        // '수입' 객체를 제외한 배열과 '수입' 객체를 포함한 배열 생성
+
         const { included: filteredItems, excluded: removedItems } =
           splitDataByName(data.monthly, "수입");
 
@@ -54,12 +56,19 @@ function MainPage() {
           monthly: filteredItems,
           weekly: data.weekly,
           income: removedItems,
-        }); // 데이터를 상태에 설정
+        });
       } catch (err) {
         console.log(err); // 에러 처리
       }
     };
     getStatisticsData();
+    const hasVisited = localStorage.getItem("hasVisited");
+
+    if (!hasVisited) {
+      alert("비로그인 시 보이는 데이터는 샘플용 데이터입니다.");
+
+      localStorage.setItem("hasVisited", "true");
+    }
   }, []);
 
   return (
@@ -72,16 +81,16 @@ function MainPage() {
           </p>
         </div>
       </div>
-      <div className="ratio">
-        <div>
-          <p>지출 비율</p>
-          <PieChart data={statistics.monthly}></PieChart>
-        </div>
-      </div>
       <div className="expenditure">
         <div>
           <p className="a">이번달 지출</p>
           <p className="b">{expenditure} 원</p>
+        </div>
+      </div>
+      <div className="ratio">
+        <div>
+          <p>지출 비율</p>
+          <PieChart data={statistics.monthly}></PieChart>
         </div>
       </div>
       <div className="graph">
@@ -119,8 +128,9 @@ function MyForm(props) {
     e.preventDefault(); // 기본 폼 제출 동작 방지
     console.log(props.formData);
     try {
-      await axios.post("/history", props.formData);
+      const res = await axios.post("/history", props.formData);
       const addedHistory = {
+        ihistory: res.data.data.result,
         amount: props.formData.amount,
         purpose: props.formData.purpose,
         date: props.formData.date,
@@ -232,6 +242,7 @@ function SecondPage() {
         setHistoryList(res.data.data); // 데이터를 상태에 설정
         const res2 = await axios.get("/category");
         setCategory(res2.data.data);
+        console.log(res.data);
       } catch (err) {
         console.log(err); // 에러 처리
       }
@@ -305,19 +316,35 @@ function SecondPage() {
             날짜별
           </button>
         </div>
-        <List data={filterHistory(formData.date)}></List>
+        <List
+          data={filterHistory(formData.date)}
+          setHistoryList={setHistoryList}
+        ></List>
       </div>
     </div>
   );
 }
 
-function List({ data }) {
+function List({ data, setHistoryList }) {
   // 처음에 보여줄 아이템 수 설정
   const [visibleItems, setVisibleItems] = useState(5);
 
   // 더보기 버튼 클릭 시 5개씩 더 보여주기
   const handleLoadMore = () => {
     setVisibleItems((prevVisibleItems) => prevVisibleItems + 5);
+  };
+
+  const deleteHistory = async (ihistory) => {
+    try {
+      const res = await axios.delete(`/history/${ihistory}`);
+      if (res.data.data.result == ihistory) {
+        setHistoryList((prevList) => {
+          return prevList.filter((item) => item.ihistory !== ihistory);
+        });
+      }
+    } catch (error) {
+      console.error("삭제 실패", error);
+    }
   };
 
   /*   if (data.length == 0) {
@@ -331,10 +358,13 @@ function List({ data }) {
       {data.slice(0, visibleItems).map((item, index) => (
         <div className="list-item" key={index}>
           <div className="list-item-buttons">
-            <button className="edit-button">
+            {/*             <button className="edit-button">
               <FontAwesomeIcon icon={faPen} />
-            </button>
-            <button className="delete-button">
+            </button> */}
+            <button
+              className="delete-button"
+              onClick={() => deleteHistory(item.ihistory)}
+            >
               <FontAwesomeIcon icon={faTrash} />
             </button>
           </div>
