@@ -1,16 +1,12 @@
 import React from "react";
 import { useAuth } from "./AuthContext";
-import { useNavigate } from "react-router-dom";
 import { NavLink, Link } from "react-router-dom";
 
 function Header() {
   const { isLoggedIn, logout } = useAuth(); // 전역 상태 사용
-  const navigate = useNavigate();
 
   const handleLogout = () => {
-    // 로그아웃 시 로컬 스토리지에서 토큰 제거
     logout();
-    // navigate("/");
   };
 
   return (
