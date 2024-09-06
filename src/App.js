@@ -1,9 +1,8 @@
 import "./App.css";
 import { useState, useEffect } from "react";
-import React, { PureComponent } from "react";
 import PieChart from "./PieChart.js";
 import LineChart from "./LineChart.js";
-import { NavLink, Route, Routes, Link } from "react-router-dom";
+import { Route, Routes,} from "react-router-dom";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import moment from "moment";
@@ -14,10 +13,8 @@ import LoginPage from "./LoginPage.js";
 import SignupPage from "./SignupPage.js";
 import Header from "./header.js";
 import { AuthProvider } from "./AuthContext.js";
-import { useAuth } from "./AuthContext.js";
 
 function MainPage() {
-  const { isLoggedIn } = useAuth(); // 전역 상태 사용
   const [statistics, setStatistics] = useState({
     monthly: [],
     weekly: [],
@@ -126,7 +123,6 @@ function MyForm(props) {
   // 폼 제출 시 실행되는 함수
   const handleSubmit = async (e) => {
     e.preventDefault(); // 기본 폼 제출 동작 방지
-    console.log(props.formData);
     try {
       const res = await axios.post("/history", props.formData);
       const addedHistory = {
@@ -242,7 +238,6 @@ function SecondPage() {
         setHistoryList(res.data.data); // 데이터를 상태에 설정
         const res2 = await axios.get("/category");
         setCategory(res2.data.data);
-        console.log(res.data);
       } catch (err) {
         console.log(err); // 에러 처리
       }
