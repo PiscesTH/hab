@@ -27,7 +27,6 @@ function LoginPage() {
         uid: uid,
         upw: password,
       });
-      console.log(res);
       const accessToken = res.data.data.accessToken;
       Cookies.set("accessToken", accessToken, {
         expires: 1, // 쿠키 유효 기간
