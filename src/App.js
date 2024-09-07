@@ -13,6 +13,7 @@ import LoginPage from "./LoginPage.js";
 import SignupPage from "./SignupPage.js";
 import Header from "./header.js";
 import { AuthProvider } from "./AuthContext.js";
+import Cookies from "js-cookie";
 
 function MainPage() {
   const [statistics, setStatistics] = useState({
@@ -66,6 +67,9 @@ function MainPage() {
 
       localStorage.setItem("hasVisited", "true");
     }
+    
+    console.log(Cookies.get("accessToken"));
+    console.log(Cookies.get("refreshToken"));
   }, []);
 
   return (

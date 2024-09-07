@@ -36,7 +36,9 @@ function LoginPage() {
       login(accessToken);
       alert("로그인 성공");
       navigate("/");
+      window.location.reload();
     } catch (error) {
+      setError(error.response.data.message);
       alert("로그인 실패");
     }
   };
