@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import PieChart from "./PieChart.js";
 import LineChart from "./LineChart.js";
 import axios from "./axios";
+import { weeklyDummy, monthlyDummy } from "./dummyData.js";
 
 function MainPage() {
   const [statistics, setStatistics] = useState({
@@ -29,12 +30,18 @@ function MainPage() {
 
     return result;
   };
+
   useEffect(() => {
     const getStatisticsData = async () => {
       try {
-        const res = await axios.get("/history/statistics");
-        const data = res.data.data;
-
+        let data;
+        if (sessionStorage.getItem("accessToken")) {
+          const res = await axios.get("/history/statistics");
+          data = res.data.data;
+        } else {
+            data = { monthly: monthlyDummy, weekly: weeklyDummy };
+            console.log(data);
+        }
         const { included: filteredItems, excluded: removedItems } =
           splitDataByName(data.monthly, "수입");
 
