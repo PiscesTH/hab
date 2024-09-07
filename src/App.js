@@ -11,7 +11,7 @@ import { faPen, faTrash, faEllipsis } from "@fortawesome/free-solid-svg-icons";
 import axios from "./axios";
 import LoginPage from "./LoginPage.js";
 import SignupPage from "./SignupPage.js";
-import Header from "./header.js";
+import Header from "./Header.js";
 import { AuthProvider } from "./AuthContext.js";
 import Cookies from "js-cookie";
 
