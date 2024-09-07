@@ -1,6 +1,6 @@
 import React from "react";
 import { useAuth } from "./AuthContext";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 function Header() {
   const { isLoggedIn, logout } = useAuth(); // 전역 상태 사용
@@ -12,7 +12,7 @@ function Header() {
   return (
     <div className="header-container">
       <h1 className="th">
-        <Link to="/">TH</Link>
+        <a href="/">TH</a>
       </h1>
       <div className="menu">
         <nav>

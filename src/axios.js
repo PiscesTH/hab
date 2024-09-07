@@ -1,10 +1,9 @@
-import axios from 'axios';
-import Cookies from 'js-cookie';
+import axios from "axios";
 axios.defaults.withCredentials = true;
 
 // Axios 기본 설정
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:8080/api', // 기본 URL 설정
+  baseURL: "http://localhost:8080/api", // 기본 URL 설정
   timeout: 10000, // 요청 타임아웃 설정(10초)
 });
 
@@ -12,7 +11,7 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   (config) => {
     // 쿠키에서 accessToken 가져오기
-    const token = Cookies.get('accessToken');
+    const token = sessionStorage.getItem("accessToken");
     
     if (token) {
       config.headers.Authorization = `Bearer ${token}`; // Authorization 헤더에 토큰 추가
@@ -38,12 +37,12 @@ axiosInstance.interceptors.response.use(
       originalRequest._retry = true; // 무한 루프 방지
       try {
         await handleTokenRefresh(); // 토큰 갱신 함수 호출
-        const newToken = Cookies.get('accessToken'); // 갱신된 토큰 가져오기
+        const newToken = sessionStorage.getItem("accessToken"); // 갱신된 토큰 가져오기
         console.log("newToken", newToken);
         originalRequest.headers.Authorization = `Bearer ${newToken}`; // 갱신된 토큰으로 요청 헤더 설정
         return axiosInstance(originalRequest); // 실패한 요청 재시도
       } catch (refreshError) {
-        console.error('Token refresh failed:', refreshError);
+        console.error("Token refresh failed:", refreshError);
         // 갱신 실패 시 로그아웃 처리 또는 에러 처리
         return Promise.reject(refreshError);
       }
@@ -54,11 +53,11 @@ axiosInstance.interceptors.response.use(
 );
 
 async function handleTokenRefresh() {
-  const response = await axiosInstance.get('/user/refresh-token');
+  const response = await axiosInstance.get("/user/refresh-token");
   const accessToken = response.data.data.accessToken;
   console.log(accessToken);
   // 새로운 access token을 쿠키에 저장
-  Cookies.set('accessToken', accessToken, { httpOnly: true, secure: true, sameSite: 'Strict' });
+  sessionStorage.setItem("accessToken", accessToken);
 
   return accessToken;
 }

@@ -28,11 +28,11 @@ function LoginPage() {
         upw: password,
       });
       const accessToken = res.data.data.accessToken;
-      Cookies.set("accessToken", accessToken, {
+/*       Cookies.set("accessToken", accessToken, {
         expires: 1, // 쿠키 유효 기간
         secure: true, // HTTPS에서만 사용 가능
         sameSite: "Strict", // 같은 사이트에서만 요청
-      });
+      }); */
       login(accessToken);
       alert("로그인 성공");
       navigate("/");
