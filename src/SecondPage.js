@@ -1,0 +1,127 @@
+import { useState, useEffect } from "react";
+import moment from "moment";
+import axios from "./axios";
+import Calendar from "react-calendar";
+import List from "./List";
+import MyForm from "./MyForm";
+
+function SecondPage() {
+    const [formData, setFormData] = useState({
+      icategory: "1",
+      amount: "",
+      purpose: "",
+      date: moment(new Date()).format("YYYY-MM-DD"),
+    });
+  
+    const handleDateChange = (date) => {
+      // Calendar에서 날짜 선택 시 호출되는 함수
+      const formattedDate = moment(date).format("YYYY-MM-DD"); // 날짜 포맷팅
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        date: formattedDate, // date 필드만 업데이트
+      }));
+    };
+  
+    const handleInputChange = (e) => {
+      const { name, value } = e.target; // name과 value를 e.target에서 추출
+  
+      // 기존 formData를 복사하고, 변경된 name 필드의 값을 업데이트
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [name]: value,
+      }));
+    };
+    const [historyList, setHistoryList] = useState([]);
+    const [category, setCategory] = useState([]);
+    const [filterType, setFilterType] = useState("all"); // 필터 상태 추가
+  
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const res = await axios.get("/history");
+          setHistoryList(res.data.data); // 데이터를 상태에 설정
+          const res2 = await axios.get("/category");
+          setCategory(res2.data.data);
+        } catch (err) {
+          console.log(err); // 에러 처리
+        }
+      };
+      fetchData();
+    }, []);
+  
+    const addHistory = (newHistory) => {
+      setHistoryList((prevList) => {
+        if (!Array.isArray(prevList)) {
+          return [newHistory];
+        }
+        return [...prevList, newHistory];
+      });
+    };
+  
+    // 필터 변경 핸들러
+    const handleFilterChange = (filter) => {
+      setFilterType(filter);
+    };
+  
+    // 필터링된 리스트 생성 함수
+    const filterHistory = (targetDate) => {
+      if (!Array.isArray(historyList)) {
+        return [];
+      }
+  
+      if (filterType === "all") {
+        return historyList;
+      } else if (filterType === "byDate") {
+        return historyList.filter((item) => item.date === targetDate);
+      }
+  
+      return [];
+    };
+  
+    return (
+      <div className="second-page-container">
+        <Calendar
+          onChange={handleDateChange}
+          value={new Date(formData.date)}
+          formatDay={(locale, date) => moment(date).format("D")}
+          formatYear={(locale, date) => moment(date).format("YYYY")}
+          formatMonthYear={(locale, date) => moment(date).format("YYYY. MM")}
+          calendarType="gregory"
+          showNeighboringMonth={false}
+          next2Label={null}
+          prev2Label={null}
+          minDetail="year"
+        ></Calendar>
+        <MyForm
+          formData={formData}
+          setFormData={handleInputChange}
+          addHistory={addHistory}
+          category={category}
+        />
+        <div className="read">
+          <div className="filter-buttons">
+            <button
+              className={`filter-button ${filterType === "all" ? "active" : ""}`}
+              onClick={() => handleFilterChange("all")}
+            >
+              전체
+            </button>
+            <button
+              className={`filter-button ${
+                filterType === "byDate" ? "active" : ""
+              }`}
+              onClick={() => handleFilterChange("byDate")}
+            >
+              날짜별
+            </button>
+          </div>
+          <List
+            data={filterHistory(formData.date)}
+            setHistoryList={setHistoryList}
+          ></List>
+        </div>
+      </div>
+    );
+  }
+
+  export default SecondPage;
