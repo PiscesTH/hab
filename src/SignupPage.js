@@ -48,7 +48,7 @@ function SignupPage() {
       alert("회원가입 완료 !");
       navigate("/login");
     } catch (error) {
-      setError(error.response.data.message);
+      setError(error.response.data.validErrorList[0].message);
       alert("회원가입 실패...");
     }
   };

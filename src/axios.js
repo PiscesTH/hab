@@ -37,9 +37,8 @@ axiosInstance.interceptors.response.use(
       // 토큰이 만료된 경우
       originalRequest._retry = true; // 무한 루프 방지
       try {
-        await handleTokenRefresh(); // 토큰 갱신 함수 호출
-        const newToken = sessionStorage.getItem("accessToken"); // 갱신된 토큰 가져오기
-        console.log("newToken", newToken);
+        await handleTokenRefresh(); 
+        const newToken = sessionStorage.getItem("accessToken"); 
         originalRequest.headers.Authorization = `Bearer ${newToken}`; // 갱신된 토큰으로 요청 헤더 설정
         return axiosInstance(originalRequest); // 실패한 요청 재시도
       } catch (refreshError) {
@@ -56,7 +55,6 @@ axiosInstance.interceptors.response.use(
 async function handleTokenRefresh() {
   const response = await axiosInstance.get("/user/refresh-token");
   const accessToken = response.data.data.accessToken;
-  console.log(accessToken);
   // 새로운 access token을 쿠키에 저장
   sessionStorage.setItem("accessToken", accessToken);
 

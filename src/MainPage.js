@@ -40,7 +40,6 @@ function MainPage() {
           data = res.data.data;
         } else {
             data = { monthly: monthlyDummy, weekly: weeklyDummy };
-            console.log(data);
         }
         const { included: filteredItems, excluded: removedItems } =
           splitDataByName(data.monthly, "수입");
@@ -51,7 +50,8 @@ function MainPage() {
           income: removedItems,
         });
       } catch (err) {
-        console.log(err); // 에러 처리
+        alert("서버에 문제가 발생했습니다. 페이지를 새로고침합니다.");
+        window.location.reload();
       }
     };
     getStatisticsData();

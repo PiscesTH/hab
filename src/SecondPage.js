@@ -49,7 +49,8 @@ function SecondPage() {
           setCategory(categoryDummy);
         }
       } catch (err) {
-        console.log(err); // 에러 처리
+        alert("서버에 문제가 발생했습니다. 페이지를 새로고침합니다.");
+        window.location.reload();
       }
     };
     fetchData();
