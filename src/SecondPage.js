@@ -41,9 +41,9 @@ function SecondPage() {
       try {
         if (sessionStorage.getItem("accessToken")) {
           const res = await axios.get("/history");
-          setHistoryList(res.data.data);
           const res2 = await axios.get("/category");
           setCategory(res2.data.data);
+          setHistoryList(res.data.data);
         } else {
           setHistoryList(historyDummy);
           setCategory(categoryDummy);
