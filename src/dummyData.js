@@ -7,19 +7,19 @@ const monthlyDummy = [
 ];
 
 const weeklyDummy = [
-  { name: "2024-08-31", total: 8000 },
-  { name: "2024-09-01", total: 123800 },
-  { name: "2024-09-02", total: 15700 },
-  { name: "2024-09-03", total: 33000 },
-  { name: "2024-09-04", total: 21500 },
-  { name: "2024-09-05", total: 0 },
-  { name: "2024-09-06", total: 50000 },
+  { name: "2024-08-25", total: 144800 },
+  { name: "2024-08-26", total: 164200 },
+  { name: "2024-08-27", total: 2000 },
+  { name: "2024-08-28", total: 2500 },
+  { name: "2024-08-29", total: 27500 },
+  { name: "2024-08-30", total: 36700 },
+  { name: "2024-08-31", total: 35000 },
 ];
 
 const historyDummy = [
   {
     ihistory: 24,
-    date: "2024-09-03",
+    date: "2024-08-27",
     amount: 50000,
     category: {
       createdAt: null,
@@ -30,7 +30,7 @@ const historyDummy = [
   },
   {
     ihistory: 19,
-    date: "2024-09-02",
+    date: "2024-08-26",
     amount: 120000,
     category: {
       createdAt: null,
@@ -41,7 +41,7 @@ const historyDummy = [
   },
   {
     ihistory: 20,
-    date: "2024-09-02",
+    date: "2024-08-26",
     amount: 23000,
     category: {
       createdAt: null,
@@ -52,7 +52,7 @@ const historyDummy = [
   },
   {
     ihistory: 21,
-    date: "2024-09-02",
+    date: "2024-08-26",
     amount: 2000,
     category: {
       createdAt: null,
@@ -63,7 +63,7 @@ const historyDummy = [
   },
   {
     ihistory: 23,
-    date: "2024-09-02",
+    date: "2024-08-26",
     amount: 3500,
     category: {
       createdAt: null,
@@ -74,7 +74,7 @@ const historyDummy = [
   },
   {
     ihistory: 14,
-    date: "2024-09-01",
+    date: "2024-08-25",
     amount: 97000,
     category: {
       createdAt: null,
@@ -85,7 +85,7 @@ const historyDummy = [
   },
   {
     ihistory: 15,
-    date: "2024-09-01",
+    date: "2024-08-25",
     amount: 20000,
     category: {
       createdAt: null,
@@ -96,7 +96,7 @@ const historyDummy = [
   },
   {
     ihistory: 16,
-    date: "2024-09-01",
+    date: "2024-08-25",
     amount: 6800,
     category: {
       createdAt: null,
