@@ -293,6 +293,7 @@ const historyDummy = [
     purpose: "다이소",
   },
 ];
+
 const categoryDummy = [
   {
     createdAt: null,

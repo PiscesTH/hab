@@ -36,14 +36,17 @@ function SecondPage() {
   const [category, setCategory] = useState([]);
   const [filterType, setFilterType] = useState("all"); // 필터 상태 추가
 
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         if (sessionStorage.getItem("accessToken")) {
-          const res = await axios.get("/history");
-          const res2 = await axios.get("/category");
-          setCategory(res2.data.data);
+          const [res, res2] = await Promise.all([
+            axios.get("/history"),
+            axios.get("/category")
+          ]);
           setHistoryList(res.data.data);
+          setCategory(res2.data.data);
         } else {
           setHistoryList(historyDummy);
           setCategory(categoryDummy);
@@ -102,7 +105,7 @@ function SecondPage() {
         formData={formData}
         setFormData={handleInputChange}
         addHistory={addHistory}
-        category={category || []}
+        category={category}
       />
       <div className="read">
         <div className="filter-buttons">
