@@ -50,8 +50,7 @@ function MainPage() {
           income: removedItems,
         });
       } catch (err) {
-        alert("서버에 문제가 발생했습니다. 페이지를 새로고침합니다.");
-        window.location.reload();
+        alert("서버에 문제가 발생했습니다. 페이지를 새로고침해주세요.")
       }
     };
     getStatisticsData();
