@@ -1,6 +1,7 @@
 import axios from "./axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 function SignupPage() {
   // 입력 필드 상태 관리
   const [uid, setUid] = useState("");
@@ -20,19 +21,18 @@ function SignupPage() {
       return;
     }
 
-    if (uid.length < 6) {
-      setError("아이디는 최소 6자 이상이어야 합니다.");
+    if (uid.length < 6 || uid.length > 12) {
+      setError("아이디는 6자 ~ 12자이어야 합니다.");
       return;
     }
-
 
     if (!/\S+@\S+\.\S+/.test(email)) {
       setError("올바른 이메일 주소를 입력해주세요.");
       return;
     }
 
-    if (password.length < 6) {
-      setError("비밀번호는 최소 6자 이상이어야 합니다.");
+    if (password.length < 8 || password.length > 20) {
+      setError("비밀번호는 8자 ~ 20자이어야 합니다.");
       return;
     }
 
@@ -64,7 +64,7 @@ function SignupPage() {
             id="uid"
             value={uid}
             onChange={(e) => setUid(e.target.value)}
-            placeholder="아이디를 입력하세요"
+            placeholder="아이디 입력(6~12자)"
             style={styles.input}
             autoComplete="off"
           />
@@ -76,7 +76,7 @@ function SignupPage() {
             id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            placeholder="비밀번호를 입력하세요"
+            placeholder="비밀번호 입력(문자, 숫자, 특수문자 포함 8~20자)"
             style={styles.input}
             autoComplete="off"
           />

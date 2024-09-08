@@ -80,7 +80,6 @@ function LoginPage() {
           로그인
         </button>
       </form>
-      {/* 회원가입 버튼 추가 */}
       <button onClick={handleRegister} style={styles.registerButton}>
         회원가입
       </button>
