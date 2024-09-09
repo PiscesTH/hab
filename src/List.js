@@ -50,7 +50,7 @@ function List({ data, setHistoryList }) {
               <div className="list-item-date">{item.date}</div>
               <div className="list-item-expense">{item.amount} 원</div>
               <div className="list-item-title">{item.purpose}</div>
-              <div className="list-item-category">{item.category.category}</div>
+              <div className="list-item-category">{item.category}</div>
             </div>
           </div>
         ))}

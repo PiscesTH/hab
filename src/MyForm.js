@@ -21,28 +21,18 @@ function MyForm(props) {
 
   const [selectedValue, setSelectedValue] = useState();
 
-  // 폼 제출 시 실행되는 함수
   const handleSubmit = async (e) => {
     e.preventDefault(); // 기본 폼 제출 동작 방지
     try {
       const res = await axios.post("/history", props.formData);
-      const addedHistory = {
-        ihistory: res.data.data.result,
-        amount: props.formData.amount,
-        purpose: props.formData.purpose,
-        date: props.formData.date,
-        category: {},
-      };
 
-      const matchedCategory = props.category.find(
-        (cat) => cat.icategory == props.formData.icategory
-      );
-      if (matchedCategory) {
-        addedHistory.category = matchedCategory;
-      }
-      props.addHistory(addedHistory);
       alert("등록 완료 !");
+
+      const res2 = await axios.get("/history");
+      props.setHistoryList(res2.data.data);
+
     } catch (error) {
+      console.log(error);
       alert("등록 실패...");
     }
   };
@@ -95,7 +85,7 @@ function MyForm(props) {
           autoComplete="off"
         ></input>
         <button className="form-submit" type="submit">
-          SUBMIT
+          등록하기
         </button>
       </div>
     </form>

@@ -58,14 +58,14 @@ function SecondPage() {
     fetchData();
   }, []);
 
-  const addHistory = (newHistory) => {
+/*   const addHistory = (newHistory) => {
     setHistoryList((prevList) => {
       if (!Array.isArray(prevList)) {
         return [newHistory];
       }
       return [...prevList, newHistory];
     });
-  };
+  }; */
 
   // 필터 변경 핸들러
   const handleFilterChange = (filter) => {
@@ -104,8 +104,8 @@ function SecondPage() {
       <MyForm
         formData={formData}
         setFormData={handleInputChange}
-        addHistory={addHistory}
         category={category}
+        setHistoryList={setHistoryList}
       />
       <div className="read">
         <div className="filter-buttons">
