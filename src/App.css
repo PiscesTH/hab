@@ -554,6 +554,10 @@ textarea:focus {
   footer {
     font-size: 18px;
   }
+
+  .recharts-legend-item {
+    font-size: 15px;
+  }
 }
 
 @media screen and (max-width: 360px) {
