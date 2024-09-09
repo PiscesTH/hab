@@ -3,8 +3,8 @@ axios.defaults.withCredentials = true;
 
 // Axios 기본 설정
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:8080/api", // localtest url
-  // baseURL: "http://webhouseholdaccountbookproject-env.eba-k3ppewsm.ap-northeast-2.elasticbeanstalk.com/api", // build용 url
+  // baseURL: "http://localhost:8080/api", // localtest url
+  baseURL: "http://webhouseholdaccountbookproject-env.eba-k3ppewsm.ap-northeast-2.elasticbeanstalk.com/api", // build용 url
   timeout: 10000, // 요청 타임아웃 설정(10초)
 });
 
