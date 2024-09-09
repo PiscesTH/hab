@@ -530,7 +530,6 @@ textarea:focus {
       "form"
       "read";
   }
-
 }
 
 @media screen and (max-width: 532px) {
@@ -539,8 +538,8 @@ textarea:focus {
   }
 
   .main-container > div {
-    width: 390px;
-    height: 390px;
+    height: 360px;
+    width: 360px;
   }
 
   p {
